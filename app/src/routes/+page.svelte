@@ -1,8 +1,7 @@
+<script lang="ts">
+	import Card from "$lib/components/Card.svelte";
+
+</script>
 <div class="page-content">
-    movil
+    <Card/>
 </div>
-<style>
-    .page-content {
-        height: 100vh;
-    }
-</style>

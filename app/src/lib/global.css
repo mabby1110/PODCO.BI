@@ -1,23 +1,25 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 html,
 body {
 	height: 100vh;
 	width: 100vw;
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
 	overflow: hidden;
 }
 .page-container {
-	width: 100%;
-    height: 100%;
+	padding: 1rem;
 	overflow: auto;
+	height: 100%;
+}
+.page-content {
+	background-color: rgba(0, 0, 255, 0.173);
 }
 @media (max-width: 400px) {
 	html,
 	body {
 		overflow: auto;
-	}
-	.page-container {
-		overflow: none;
 	}
 }
