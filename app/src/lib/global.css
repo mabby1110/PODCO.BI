@@ -1,3 +1,26 @@
+:root {
+	--color-primary: #fafafa;
+	--color-secondary: #f0f0f0;
+	--color-background: #d1d1d1;
+	--color-highlight: #4b4298;
+	--color-contrast: #f8da60;
+	--color-title: #000000;
+	--color-text: #000000;
+	--color-error: #ff0000bb;
+	--color-success: #05a941bb;
+	--color-muted: #babababb;
+
+	--a: 8px;
+	--b: 16px;
+	--c: 24px;
+	--d: 40px;
+	--e: 64px;
+	--f: 104px;
+	--g: 168px;
+	--h: 272px;
+	--i: 440px;
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
