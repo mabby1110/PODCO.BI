@@ -28,17 +28,21 @@
 }
 html,
 body {
-	height: 100vh;
-	width: 100vw;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	overflow: hidden;
 }
 .page-container {
-	padding: 1rem;
-	overflow: auto;
+	width: 100%;
 	height: 100%;
+	padding: var(--a);
 }
 .page-content {
 	background-color: rgba(0, 0, 255, 0.173);
+	overflow: auto;
 }
 @media (max-width: 400px) {
 	html,

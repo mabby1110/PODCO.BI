@@ -10,8 +10,8 @@
 	button {
 		background-color: var(--color-primary);
 		width: 100%;
-		max-width: var(--i);
-		height: var(--h);
+		height: 100%;
+		min-height: var(--h);
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
 		padding: var(--a);
