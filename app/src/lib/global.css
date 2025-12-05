@@ -41,8 +41,8 @@ body {
 	padding: var(--a);
 }
 .page-content {
+	height: 100%;
 	background-color: rgba(0, 0, 255, 0.173);
-	overflow: auto;
 }
 @media (max-width: 400px) {
 	html,

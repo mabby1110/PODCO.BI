@@ -17,21 +17,19 @@
 
 <style>
     .page-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(var(--h), 1fr));
-        grid-auto-rows: var(--h);
-
+        display: flex;
+        flex-wrap: wrap;
     }
     .details {
         background-color: rgba(255, 255, 0, 0.3);
-        min-height: fit-content;
-        grid-column: span 2;
+        flex-grow: 1;
+        min-width: var(--h);
     }
     .calendar {
         background-color: rgba(255, 0, 0, 0.3);
-        min-height: fit-content;
-        grid-column: span 3;
-        grid-row: span 2;
+        min-width: 60vw;
+        flex-grow: 3;
     }
+
 </style>
 
