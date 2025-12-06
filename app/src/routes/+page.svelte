@@ -1,7 +1,5 @@
 <script lang="ts">
 	import ButtonA from "$lib/components/ButtonA.svelte";
-	import CardA from "$lib/components/CardA.svelte";
-	import CardB from "$lib/components/CardB.svelte";
 	import CardC from "$lib/components/CardC.svelte";
 	import CardD from "$lib/components/CardD.svelte";
 
@@ -9,6 +7,9 @@
 <div class="page-content">
     <div class="details">
         <CardD title='detalles'/>
+    </div>
+    <div class="actions">
+        <ButtonA title="filtro"/>
     </div>
     <div class="calendar">
         <CardC title="calendario"/>
@@ -18,17 +19,17 @@
 <style>
     .page-content {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
     }
     .details {
-        background-color: rgba(255, 255, 0, 0.3);
-        flex-grow: 1;
-        min-width: var(--h);
+        background-color: rgba(255, 0, 0, 0.3);
+    }
+    .actions {
+        background-color: rgba(34, 0, 255, 0.3);
     }
     .calendar {
         background-color: rgba(255, 0, 0, 0.3);
-        min-width: 60vw;
-        flex-grow: 3;
+        flex-grow: 4;
     }
 
 </style>

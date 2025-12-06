@@ -10,6 +10,7 @@
 	button {
 		background-color: transparent;
 		width: 100%;
+		max-width: var(--i);
 		height: var(--h);
 		border: none;
 		border-radius: var(--a);
