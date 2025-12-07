@@ -2,7 +2,7 @@
 	import { slide } from 'svelte/transition';
 
 	let { title } = $props();
-	let expanded = $state(true);
+	let expanded = $state(false);
 </script>
 
 <button onclick={() => (expanded = !expanded)}>

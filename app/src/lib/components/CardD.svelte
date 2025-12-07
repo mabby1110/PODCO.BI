@@ -1,9 +1,13 @@
 <script lang="ts">
-	let {title} = $props();
+	let { children } = $props();
 </script>
 
 <button>
-	{title}
+	{#if children}
+		{@render children()}
+	{:else}
+		<p>fallback content</p>
+	{/if}
 </button>
 
 <style>
