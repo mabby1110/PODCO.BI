@@ -24,5 +24,6 @@
 		right: 0;
 		bottom: 0;
 		margin: 0 var(--a) var(--a) 0;
+		z-index: 999;
 	}
 </style>

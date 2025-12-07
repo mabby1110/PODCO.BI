@@ -2,7 +2,6 @@
 	import ButtonA from "$lib/components/ButtonA.svelte";
 	import CardC from "$lib/components/CardC.svelte";
 	import CardD from "$lib/components/CardD.svelte";
-    import Calenar from "$lib/components/Calendar.svelte"
 	import Calendar from "$lib/components/Calendar.svelte";
 
 </script>
@@ -28,13 +27,12 @@
     .page-content {
         display: flex;
         flex-direction: column;
-    }
-    .details {
-    }
-    .actions {
+        overflow: auto;
     }
     .calendar {
-        flex-grow: 4;
+        flex-grow: 1;
+        overflow: hidden;
+		min-height: var(--h);
     }
 
 </style>
