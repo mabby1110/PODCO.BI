@@ -3,7 +3,7 @@
     import { draggable, dropzone } from "$lib/actions/dnd";
 
     const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
-    const hoursRangePerDay = { start: 8, end: 23 };
+    const hoursRangePerDay = { start: 8, end: 18 };
     
     let eventList = $state([
         {id: '1', hour: 9, day: 'Lun', title: 'evento ejemplo', details: 'detalles del evento'},
@@ -113,7 +113,6 @@
     .event-cell {
         position: sticky;
 		width: 60vw;
-		max-width: var(--h);
         min-height: var(--e);
     }
     .time-grid .corner {
