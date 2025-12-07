@@ -21,7 +21,7 @@
                 <tr>
                     <th class="corner">Hora</th>
                     {#each weekdays as day}
-                        <th class="corner">{day}</th>
+                        <th>{day}</th>
                     {/each}
                 </tr>
             </thead>
@@ -62,28 +62,21 @@
         border-collapse: collapse;
         position: relative;
     }
-    .time-grid thead {
-        z-index: 99;
-    }
     .time-grid th,
     .time-grid td {
         position: sticky;
         left: 0;
         top: 0;
         background-color: var(--color-primary);
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         gap: 1px;
     }
     .time-grid th {
         padding: 8px;
         position: sticky;
-        left: 0;
+        left: var(--e);
         top: 0;
         z-index: 9;
-    }
-    .corner {
-        z-index: 99;
     }
     .hour-cell {
         position: sticky;
@@ -91,9 +84,17 @@
         padding: 8px;
         text-align: center;
         width: var(--i);
+        min-width: var(--e);
     }
     .event-cell {
+        position: sticky;
+        left: var(--i);
         min-width: var(--h);
         min-height: var(--e);
+    }
+    .time-grid .corner {
+        position: sticky;
+        z-index: 9999;
+        left: 0;
     }
 </style>
