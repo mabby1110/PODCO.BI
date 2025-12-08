@@ -4,28 +4,22 @@
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
 	const hoursRangePerDay = { start: 8, end: 18 };
+	const { googleEvents } = $props();
 
-	let eventList = $state([
-		{ id: '1', hour: 9, day: 'Lun', title: 'evento ejemplo', details: 'detalles del evento' },
-		{
-			id: '2',
-			hour: 10,
-			day: 'Mar',
-			title: 'Reunión de equipo',
-			details: 'Discusión de proyectos'
-		},
-		{
-			id: '3',
-			hour: 14,
-			day: 'Mié',
-			title: 'Presentación cliente',
-			details: 'Propuesta comercial'
-		},
-		{ id: '4', hour: 11, day: 'Vie', title: 'Sesión de código', details: 'Code review semanal' },
-		{ id: '5', hour: 16, day: 'Jue', title: 'Workshop diseño', details: 'UX/UI best practices' }
-	]);
+	const [headers, ...rows] = googleEvents;
 
-	// Generar array de horas
+	let eventList = $state(
+		rows.map((row, index) => ({
+			id: row[0],
+			hour: 9+index,
+			day: 'Lun',
+			title: row[1],
+			details: row[2],
+			documentacion: row[2],
+			mantenimiento: row[3]
+		}))
+	);
+
 	const hours = $derived(
 		Array.from(
 			{ length: hoursRangePerDay.end - hoursRangePerDay.start },
@@ -33,16 +27,13 @@
 		)
 	);
 
-	// Función para encontrar evento en hora y día específicos
 	function getEvent(hour: number, day: string) {
 		return eventList.find((event) => event.hour === hour && event.day === day);
 	}
 
-	// Manejar el drop del evento
 	function handleDrop(eventId: string, newHour: number, newDay: string) {
 		const eventIndex = eventList.findIndex((event) => event.id === eventId);
 		if (eventIndex !== -1) {
-			// Verificar si ya existe un evento en esa celda
 			const existingEvent = getEvent(newHour, newDay);
 			if (!existingEvent || existingEvent.id === eventId) {
 				eventList[eventIndex] = {
@@ -79,7 +70,7 @@
 							{#if getEvent(hour, day)}
 								{@const event = getEvent(hour, day)}
 								<div use:draggable={event.id}>
-									<CardA title={event.title} />
+									<CardA {event}/>
 								</div>
 							{/if}
 						</td>

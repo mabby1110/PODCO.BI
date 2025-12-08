@@ -7,8 +7,8 @@
 	import { appState } from '$lib/stores/appState.svelte';
 	
 	let { data } = $props();
+	console.log(data);
 	
-	console.log('Data del server:', data.ventas);
 </script>
 
 <div class="page-content">
@@ -27,7 +27,7 @@
 	</div>
 	<div class="calendar">
 		<CardC>
-			<Calendar />
+			<Calendar googleEvents={data.ventas}/>
 		</CardC>
 	</div>
 </div>

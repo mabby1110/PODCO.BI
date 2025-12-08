@@ -2,16 +2,16 @@
 	let { children } = $props();
 </script>
 
-<button>
+<div class="panel">
 	{#if children}
 		{@render children()}
 	{:else}
 		<p>fallback content</p>
 	{/if}
-</button>
+</div>
 
 <style>
-	button {
+	div {
 		background-color: var(--color-liquidGlazz);
 		backdrop-filter: blur(16px);
 		flex-grow: 1;

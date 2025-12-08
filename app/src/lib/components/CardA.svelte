@@ -2,13 +2,13 @@
 	import { draggable } from "$lib/actions/dnd";
 	import { appState } from "$lib/stores/appState.svelte";
 	
-	let { title, children } = $props();
+	let { event} = $props();
 	let isDndEnabled = $derived($appState.dnd);
 </script>
 
-<button use:draggable={{ data: title, enabled: isDndEnabled }}>
-	{#if children}
-		{@render children()}
+<button use:draggable={{ data: event.title, enabled: isDndEnabled }}>
+	{#if event}
+		{event.title}
 	{:else}
 		<p>fallback content</p>
 	{/if}
