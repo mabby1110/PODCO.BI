@@ -3,8 +3,8 @@
 	--color-liquidGlazz: rgba(223, 227, 255, 0.6);
 	--color-secondary: #f0f0f0;
 	--color-background: #d1d1d1;
-	--color-highlight: #4b4298;
-	--color-contrast: #f8da60;
+	--color-highlight: rgba(0, 0, 255, 0.6);
+	--color-contrast: rgba(255, 0, 0, 0.6);
 	--color-title: #000000;
 	--color-text: #000000;
 	--color-error: #ff0000bb;
@@ -54,6 +54,18 @@ body {
 	border-radius: var(--a);
 	padding: var(--a);
 	background-color: var(--color-liquidGlazz);
+	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(16px);
+}
+.butter {
+	background-color: var(--color-highlight);
+	color: var(--color-primary);
+	font-weight: lighter;
+	border: none;
+	height: var(--d);
+	min-width: var(--f);
+	border-radius: var(--a);
+	padding: var(--a);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(16px);
 }

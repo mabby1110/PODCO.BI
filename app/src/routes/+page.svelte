@@ -5,10 +5,10 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import CardB from '$lib/components/CardB.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
-	
+	import FormModal from '$lib/components/FormModal.svelte';
+
 	let { data } = $props();
 	console.log(data);
-	
 </script>
 
 <div class="page-content">
@@ -16,18 +16,17 @@
 		<CardD>
 			<p>detalles</p>
 		</CardD>
-		<CardB>
-			<button onclick={() => appState.toggleDnd()}>
-				Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
-			</button>
-		</CardB>
 	</div>
 	<div class="actions">
+		<button onclick={() => appState.toggleDnd()} class="butter">
+			Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
+		</button>
 		<ButtonA title="filtro" />
+		<FormModal />
 	</div>
 	<div class="calendar">
 		<CardC>
-			<Calendar googleEvents={data.actividades_fijas}/>
+			<Calendar googleEvents={data.actividades_fijas} />
 		</CardC>
 	</div>
 </div>
@@ -39,11 +38,11 @@
 		overflow: auto;
 		gap: var(--a);
 	}
-    .details {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--a);
-    }
+	.details {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--a);
+	}
 	.calendar {
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
