@@ -2,7 +2,7 @@
 	let { children } = $props();
 </script>
 
-<button>
+<button class="panel">
 	{#if children}
 		{@render children()}
 	{:else}
@@ -14,20 +14,8 @@
 	button {
 		background-color: transparent;
 		width: 100%;
-		max-width: var(--i);
+		max-width: var(--j);
 		height: var(--h);
-		border: none;
-		border-radius: var(--a);
-		padding: var(--a);
 		cursor: pointer;
-		transition: background-color 0.2s ease;
-	}
-
-	button:hover {
-		background-color: var(--color-secondary);
-	}
-
-	button:active {
-		background-color: var(--color-secondary);
 	}
 </style>

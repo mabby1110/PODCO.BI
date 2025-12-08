@@ -12,7 +12,6 @@
 
 <style>
 	button {
-		background-color: var(--color-primary);
 		width: 100%;
 		height: 100%;
 		border: 1px solid var(--color-muted);
@@ -22,5 +21,7 @@
 		transition: background-color 0.2s ease;
 		overflow: auto;
 		display: flex;
+		background-color: var(--color-liquidGlazz);
+		box-shadow: 8px 0 8px 6px rgba(0, 0, 0, 0.2);
 	}
 </style>

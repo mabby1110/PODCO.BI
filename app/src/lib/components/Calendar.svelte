@@ -91,7 +91,8 @@
     .time-grid td {
         position: sticky;
         top: 0;
-        background-color: var(--color-primary);
+        background-color: transparent;
+        backdrop-filter: blur(16px);
         outline: 1px solid rgba(0, 0, 0, 0.2);
         gap: 1px;
     }

@@ -28,6 +28,7 @@
         display: flex;
         flex-direction: column;
         overflow: auto;
+        gap: var(--a);
     }
     .calendar {
         flex-grow: 1;

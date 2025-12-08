@@ -1,5 +1,6 @@
 :root {
 	--color-primary: #fafafa;
+	--color-liquidGlazz: rgba(198, 204, 255, 0.3);
 	--color-secondary: #f0f0f0;
 	--color-background: #d1d1d1;
 	--color-highlight: #4b4298;
@@ -19,6 +20,7 @@
 	--g: 168px;
 	--h: 272px;
 	--i: 440px;
+	--j: 912px;
 }
 
 * {
@@ -41,7 +43,13 @@ body {
 .page-content {
 	height: 100%;
 	padding: var(--a);
-	background-color: rgba(0, 0, 255, 0.1);
+}
+.panel {
+	border: none;
+	border-radius: var(--a);
+	padding: var(--a);
+	background-color: var(--color-liquidGlazz);
+	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 500px) {
 	html,
