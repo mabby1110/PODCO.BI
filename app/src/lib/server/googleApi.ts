@@ -11,7 +11,7 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: 'v4', auth });
 
-export async function getVentasRange(range: string = 'historico!A1:H322') {
+export async function getRange(range: string = 'historico!A1:H322') {
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: GOOGLE_SHEET_ID,
     range

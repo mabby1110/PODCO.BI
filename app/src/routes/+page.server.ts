@@ -1,10 +1,10 @@
-import { getVentasRange } from '$lib/server/googleApi';
+import { getRange } from '$lib/server/googleApi';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const ventas = await getVentasRange('actividades_fijas!A:D');
+  const actividades_fijas = await getRange('actividades_fijas!A:D');
   
   return {
-    ventas
+    actividades_fijas
   };
 };

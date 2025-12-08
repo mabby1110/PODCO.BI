@@ -27,7 +27,7 @@
 	</div>
 	<div class="calendar">
 		<CardC>
-			<Calendar googleEvents={data.ventas}/>
+			<Calendar googleEvents={data.actividades_fijas}/>
 		</CardC>
 	</div>
 </div>
