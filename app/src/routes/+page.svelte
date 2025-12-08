@@ -5,6 +5,10 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import CardB from '$lib/components/CardB.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
+	
+	let { data } = $props();
+	
+	console.log('Data del server:', data.ventas);
 </script>
 
 <div class="page-content">
