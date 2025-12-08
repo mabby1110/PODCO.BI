@@ -1,6 +1,6 @@
 :root {
 	--color-primary: #fafafa;
-	--color-liquidGlazz: rgba(198, 204, 255, 0.3);
+	--color-liquidGlazz: rgba(223, 227, 255, 0.6);
 	--color-secondary: #f0f0f0;
 	--color-background: #d1d1d1;
 	--color-highlight: #4b4298;
@@ -28,6 +28,11 @@
 	margin: 0;
 	padding: 0;
 }
+html {
+	background-image: url('/bombas.svg');
+	background-size: contain;
+	background-position: center;
+}
 html,
 body {
 	position: fixed;
@@ -50,6 +55,7 @@ body {
 	padding: var(--a);
 	background-color: var(--color-liquidGlazz);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(16px);
 }
 @media (min-width: 500px) {
 	html,

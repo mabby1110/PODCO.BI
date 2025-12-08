@@ -12,7 +12,7 @@
 
 <style>
 	button {
-		background-color: transparent;
+		background-color: var(--color-liquidGlazz);
 		width: 100%;
 		max-width: var(--j);
 		height: var(--h);

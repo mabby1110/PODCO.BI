@@ -11,7 +11,7 @@
 </svelte:head>
 
 <nav class="nav-container">
-    <NavButton title='LOGO'/>
+	<NavButton title="LOGO" />
 </nav>
 
 <div class="page-container">
