@@ -5,33 +5,25 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
 	import FormModal from '$lib/components/FormModal.svelte';
-
-	let { data } = $props();
-	console.log(data);
+	import CardA from '$lib/components/CardA.svelte';
+	import CardB from '$lib/components/CardB.svelte';
 </script>
 
 <div class="page-content">
 	<div class="title">
 		<h1>Actividades</h1>
 	</div>
-	<div class="details">
-		<CardD>
-			<p>detalles</p>
-		</CardD>
-		<div class="actions">
-			<button onclick={() => appState.toggleDnd()} class="butter">
-				Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
-			</button>
-			<ButtonA title="filtro" />
-			<FormModal />
-		</div>
+
+	<div class="actions">
+		<button onclick={() => appState.toggleDnd()} class="butter">
+			Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
+		</button>
+		<ButtonA title="filtro" />
+		<FormModal />
 	</div>
-	
-	<div class="calendar">
-		<CardC>
-			<Calendar googleEvents={data.actividades_fijas} />
-		</CardC>
-	</div>
+    <div class="details">
+        <CardB>hola</CardB>
+    </div>
 </div>
 
 <style>
@@ -49,7 +41,6 @@
 	}
 	.details {
 		display: flex;
-		flex-wrap: wrap;
 		gap: var(--a);
 	}
 	.actions {

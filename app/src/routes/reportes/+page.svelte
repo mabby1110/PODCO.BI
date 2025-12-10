@@ -5,9 +5,6 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
 	import FormModal from '$lib/components/FormModal.svelte';
-
-	let { data } = $props();
-	console.log(data);
 </script>
 
 <div class="page-content">
@@ -29,7 +26,7 @@
 	
 	<div class="calendar">
 		<CardC>
-			<Calendar googleEvents={data.actividades_fijas} />
+            algo
 		</CardC>
 	</div>
 </div>

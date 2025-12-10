@@ -90,8 +90,8 @@
 	{#if expanded}
 		<div class="nav-links" transition:slide>
 			<a href="/actividades">Tablero de actividades</a>
-			<a href="#">Tablero de Ventas</a>
-			<a href="#">Tablero de Compras</a>
+			<a href="/ventas">Tablero de Ventas</a>
+			<a href="/reporte">Reporte Empresarial</a>
 			<button onclick={() => appState.resetPanelPosition()}>Resetear posición</button>
 		</div>
 	{/if}
