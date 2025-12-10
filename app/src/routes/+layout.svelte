@@ -21,9 +21,9 @@
 <style>
 	.nav-container {
 		position: fixed;
-		right: 0;
-		bottom: 0;
-		margin: 0 var(--a) var(--a) 0;
+		left: var(--a);
+		top: 0;
+		margin: var(--a) var(--a) 0 0;
 		z-index: 999;
 	}
 </style>

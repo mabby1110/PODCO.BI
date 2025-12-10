@@ -142,15 +142,9 @@
 		border-bottom: 1px solid #e5e5e5;
 	}
 	
-	.modal-header h2 {
-		margin: 0;
-		font-size: 1.5rem;
-	}
-	
 	.close {
 		background: none;
 		border: none;
-		font-size: 1.5rem;
 		cursor: pointer;
 		padding: 0;
 		width: 2rem;
@@ -179,17 +173,10 @@
 		gap: 0.25rem;
 	}
 	
-	label span {
-		font-weight: 500;
-		font-size: 0.875rem;
-	}
-	
 	input, textarea, select {
 		padding: 0.5rem;
 		border: 1px solid #d1d5db;
 		border-radius: 4px;
-		font-family: inherit;
-		font-size: 0.875rem;
 	}
 	
 	input:focus, textarea:focus, select:focus {
@@ -209,7 +196,6 @@
 	.actions button {
 		padding: 0.5rem 1rem;
 		border-radius: 4px;
-		font-weight: 500;
 		cursor: pointer;
 		border: none;
 	}

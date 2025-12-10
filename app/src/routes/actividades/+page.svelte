@@ -3,7 +3,6 @@
 	import CardC from '$lib/components/CardC.svelte';
 	import CardD from '$lib/components/CardD.svelte';
 	import Calendar from '$lib/components/Calendar.svelte';
-	import CardB from '$lib/components/CardB.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
 	import FormModal from '$lib/components/FormModal.svelte';
 
@@ -12,10 +11,8 @@
 </script>
 
 <div class="page-content">
-	<div class="details">
-		<CardD>
-			<p>detalles</p>
-		</CardD>
+	<div class="title">
+		<h1>Actividades</h1>
 	</div>
 	<div class="actions">
 		<button onclick={() => appState.toggleDnd()} class="butter">
@@ -23,6 +20,12 @@
 		</button>
 		<ButtonA title="filtro" />
 		<FormModal />
+	</div>
+	
+	<div class="details">
+		<CardD>
+			<p>detalles</p>
+		</CardD>
 	</div>
 	<div class="calendar">
 		<CardC>
@@ -37,6 +40,12 @@
 		flex-direction: column;
 		overflow: auto;
 		gap: var(--a);
+	}
+	.title {
+		padding: var(--a);
+	}
+	.title h1 {
+		height: var(--d);
 	}
 	.details {
 		display: flex;
