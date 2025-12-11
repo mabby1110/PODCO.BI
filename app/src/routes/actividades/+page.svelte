@@ -7,7 +7,7 @@
 	import FormModal from '$lib/components/FormModal.svelte';
 
 	let { data } = $props();
-	console.log(data);
+	console.log(data.actividades_fijas);
 </script>
 
 <div class="page-content">
@@ -18,13 +18,13 @@
 		<CardD>
 			<p>detalles</p>
 		</CardD>
-		<div class="actions">
-			<button onclick={() => appState.toggleDnd()} class="butter">
-				Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
-			</button>
-			<ButtonA title="filtro" />
-			<FormModal />
-		</div>
+	</div>
+	<div class="actions">
+		<button onclick={() => appState.toggleDnd()} class="butter">
+			Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
+		</button>
+		<ButtonA title="filtro" />
+		<FormModal />
 	</div>
 	
 	<div class="calendar">

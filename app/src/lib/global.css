@@ -11,6 +11,12 @@
 	--color-success: #05a941bb;
 	--color-muted: #babababb;
 
+	--color-prospecto: rgba(255, 255, 255, 0.6);
+	--color-analizar:rgba(153, 164, 253, 0.6);
+	--color-cotizar:rgba(4, 0, 255, 0.6);
+	--color-ganada:rgba(0, 255, 98, 0.6);
+	--color-perdida:rgba(51, 51, 51, 0.6);
+
 	--a: 8px;
 	--b: 16px;
 	--c: 24px;
@@ -28,11 +34,6 @@
 	margin: 0;
 	padding: 0;
 	font-family:Arial, Helvetica, sans-serif;
-}
-html {
-	background-image: url('/bombas.svg');
-	background-size: contain;
-	background-position: center;
 }
 html,
 body {
