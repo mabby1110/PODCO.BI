@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
     // Obtener los datos, donde la primera fila son los encabezados
-    const historial_oportunidades_array = await getRange('historial_oportunidades!A:I');
+    const historial_oportunidades_array = await getRange('historial_oportunidades!A:J');
 
     if (!historial_oportunidades_array || historial_oportunidades_array.length === 0) {
         return {

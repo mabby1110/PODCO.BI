@@ -17,7 +17,7 @@
 		<ButtonA title="filtro" />
 		<FMOportunidades />
 	</div>
-	<div class="details">
+	<div class="op-list">
 		{#each data.historial_oportunidades_json as op}
 			<CardB
 				{op}
@@ -33,7 +33,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: auto;
-		gap: var(--a);
+		gap: var(--b);
 	}
 	.title {
 		padding: var(--a);
@@ -41,10 +41,10 @@
 	.title h1 {
 		height: var(--d);
 	}
-	.details {
+	.op-list {
 		display: flex;
 		flex-direction: column;
-		gap: var(--a);
+		gap: var(--b);
 	}
 	.actions {
 		display: flex;
