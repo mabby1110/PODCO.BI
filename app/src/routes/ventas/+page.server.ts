@@ -2,6 +2,8 @@ import { getRange, appendRow } from '$lib/server/googleApi';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
+    
+    console.log("\nventas loaded\n");
     // Obtener los datos, donde la primera fila son los encabezados
     const historial_oportunidades_array = await getRange('historial_oportunidades!A:J');
 
