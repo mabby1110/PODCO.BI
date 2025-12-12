@@ -1,21 +1,25 @@
 :root {
-	--color-primary: #fafafa;
-	--color-liquidGlazz: rgba(223, 227, 255, 0.6);
-	--color-secondary: #f0f0f0;
-	--color-background: #d1d1d1;
-	--color-highlight: rgba(0, 0, 255, 0.6);
-	--color-contrast: rgba(255, 0, 0, 0.6);
+	--color-primary: #e1e5f2aa;
+	--color-secondary: #b8c0d9aa;
+	--color-background: #ffffffaa;
+	--color-highlight: #ffff0099;
+	--color-contrast: rgba(0, 0, 105, 0.8);
 	--color-title: #000000;
 	--color-text: #000000;
 	--color-error: #ff0000bb;
 	--color-success: #05a941bb;
 	--color-muted: #babababb;
 
-	--color-prospecto: rgba(255, 255, 255, 0.6);
-	--color-analizar:rgba(153, 164, 253, 0.6);
-	--color-cotizar:rgba(4, 0, 255, 0.6);
-	--color-ganada:rgba(0, 255, 98, 0.6);
-	--color-perdida:rgba(51, 51, 51, 0.6);
+/* Paleta ajustada para contraste con TEXTO NEGRO */
+--color-prospecto: var(--color-secondary);
+--color-analizar: #5CA8FF99;
+--color-cotizar: #FFD70099;
+--color-ganada: #34D76A99;
+--color-enviar: #6575FF99;
+--color-finalizar: #000000ee;
+--color-perdida: #FF444499;
+
+
 
 	--a: 8px;
 	--b: 16px;
@@ -33,7 +37,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	font-family:Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 html,
 body {
@@ -42,6 +46,7 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	background-color: var(--color-background);
 }
 .page-container {
 	width: 100%;
@@ -55,13 +60,13 @@ body {
 	border: none;
 	border-radius: var(--a);
 	padding: var(--a);
-	background-color: var(--color-liquidGlazz);
+	background-color: var(--color-primary);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(16px);
 }
 .butter {
-	background-color: var(--color-highlight);
-	color: var(--color-primary);
+	background-color: var(--color-primary);
+	color: var(--color-text);
 	font-weight: lighter;
 	border: none;
 	height: var(--d);

@@ -14,7 +14,7 @@
 	let panelElement: HTMLElement;
 
 	$effect(() => {
-		const unsubscribe = appState.subscribe(state => {
+		const unsubscribe = appState.subscribe((state) => {
 			storeState = state;
 			offsetX = state.panelPosition.x;
 			offsetY = state.panelPosition.y;
@@ -25,10 +25,10 @@
 	function handlePointerDown(e: PointerEvent) {
 		const target = e.target as HTMLElement;
 		if (target.closest('.nav-links')) return;
-		
+
 		startX = e.clientX - offsetX;
 		startY = e.clientY - offsetY;
-		
+
 		dragTimeout = setTimeout(() => {
 			isDragging = true;
 			panelElement?.setPointerCapture(e.pointerId);
@@ -37,7 +37,7 @@
 
 	function handlePointerMove(e: PointerEvent) {
 		if (!isDragging) return;
-		
+
 		offsetX = e.clientX - startX;
 		offsetY = e.clientY - startY;
 	}
@@ -47,7 +47,7 @@
 			clearTimeout(dragTimeout);
 			dragTimeout = null;
 		}
-		
+
 		if (isDragging) {
 			appState.setPanelPosition(offsetX, offsetY);
 		} else {
@@ -56,7 +56,7 @@
 				expanded = !expanded;
 			}
 		}
-		
+
 		isDragging = false;
 		panelElement?.releasePointerCapture(e.pointerId);
 	}
@@ -70,7 +70,7 @@
 	}
 </script>
 
-<button 
+<button
 	bind:this={panelElement}
 	onpointerdown={handlePointerDown}
 	onpointermove={handlePointerMove}
@@ -98,6 +98,26 @@
 </button>
 
 <style>
+	button {
+		background-color: var(--color-primary);
+		border: 1px solid var(--color-muted);
+		border-radius: var(--a);
+		padding: var(--a);
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		float: right;
+		max-width: 96vw;
+		touch-action: none;
+		user-select: none;
+		will-change: transform;
+	}
+
+	button.dragging {
+		cursor: move;
+		background-color: var(--color-highlight);
+	}
 	.nav-links {
 		display: flex;
 		flex-direction: column;
@@ -134,32 +154,5 @@
 		margin: 0 var(--c);
 		white-space: nowrap;
 		flex-grow: 1;
-	}
-	button {
-		background-color: var(--color-primary);
-		border: 1px solid var(--color-muted);
-		border-radius: var(--a);
-		padding: var(--a);
-		cursor: pointer;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		float: right;
-		max-width: 96vw;
-		touch-action: none;
-		user-select: none;
-		will-change: transform;
-	}
-
-	button.dragging {
-		cursor: move;
-	}
-
-	button:hover {
-		background-color: var(--color-secondary);
-	}
-
-	button:active {
-		background-color: var(--color-secondary);
 	}
 </style>
