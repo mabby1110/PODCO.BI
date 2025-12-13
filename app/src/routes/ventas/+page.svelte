@@ -5,7 +5,7 @@
 	import FMOportunidades from '$lib/components/FMOportunidades.svelte';
 
 	let { data } = $props();
-	console.log(data.agentes);
+	console.log(data.fases_embudo_ventas);
 </script>
 
 <div class="page-content">
@@ -23,6 +23,7 @@
 				{op}
 				cliente={data.clientes.find((item) => item.id_cliente === op.id_cliente)}
 				agente={data.agentes.find((item) => item.id_agente === op.id_agente)}
+				fase={data.fases_embudo_ventas.find((item) => item.id === op.fase)}
 			/>
 		{/each}
 	</div>

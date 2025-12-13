@@ -2,7 +2,7 @@
 	import { slide } from 'svelte/transition';
 	import EditableField from './EditableField.svelte';
 
-	let { op, cliente, agente } = $props();
+	let { op, cliente, agente, fase } = $props();
 
 	// Placeholders seguros
 	const motivo = op?.motivo || 'Motivo no definido';
@@ -64,7 +64,7 @@
 	</div>
 
 	<div class="card-meta">
-		<p>{nombreAgente}</p>
+		<p>{nombreAgente}, {fase.actual}</p>
 	</div>
 
 	{#if isExpanded}
@@ -96,6 +96,10 @@
 				id={op?.id_oportunidad || ''}
 				hint="OC, pedido del cliente, guía de paquetería, acuse, fichas técnicas…"
 			/>
+			<div class="card-actions"  transition:slide>
+				<h2>Siguiente fase:</h2>
+				<button class="butter">{fase.accion}</button>
+			</div>
 		</div>
 	{/if}
 </button>
@@ -143,5 +147,14 @@
 		flex-direction: column;
 		gap: var(--b);
 		width: 100%;
+	}
+	.card-actions {
+		margin: var(--b) 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--a);
+	}
+	.butter {
+		background-color: var(--color-highlight);
 	}
 </style>
