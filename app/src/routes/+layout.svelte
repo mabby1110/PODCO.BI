@@ -1,5 +1,5 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+	import bms from '$lib/assets/bms-logo.svg';
 	import NavButton from '$lib/components/NavButton.svelte';
 	import '$lib/global.css';
 
@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href={bms} />
 </svelte:head>
 
 <nav class="nav-container">
