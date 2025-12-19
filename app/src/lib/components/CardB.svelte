@@ -96,9 +96,12 @@
 				id={op?.id_oportunidad || ''}
 				hint="OC, pedido del cliente, guía de paquetería, acuse, fichas técnicas…"
 			/>
-			<div class="card-actions"  transition:slide>
+			<div class="card-actions">
 				<h2>Siguiente fase:</h2>
 				<button class="butter">{fase.accion}</button>
+				{#if op?.fase == 3}
+				<button class="butter">Perdida</button>
+				{/if}
 			</div>
 		</div>
 	{/if}
@@ -155,6 +158,7 @@
 		gap: var(--a);
 	}
 	.butter {
-		background-color: var(--color-highlight);
+		background-color: var(--color-contrast);
+		color: white;
 	}
 </style>
