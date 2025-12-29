@@ -1,8 +1,19 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import ButtonA from './ButtonA.svelte';
 	import Searchbar from './Searchbar.svelte';
 	let { clientes } = $props();
 	let showModal = $state(false);
+	let selectedDataItem = $state(null);
+	let showClient = $derived(selectedDataItem?true:false);
+
+	$effect(() => {
+		console.log('selectedDataItem', selectedDataItem);
+	});
+
+	function clearSelection() {
+		selectedDataItem = null;
+	}
 </script>
 
 <button onclick={() => (showModal = true)} class="butter">Agregar Oportunidad</button>
@@ -24,17 +35,25 @@
 
 			<form method="POST" action="?/addEvent" use:enhance>
 				<label>
-					<Searchbar data={clientes}/>
 					<span>Cliente</span>
-					<!-- <select name="cliente" required>
-						<option value="">Seleccionar</option>
-						{#each clientes as cliente}
-							<option value="">
-								{cliente.razon_social}
-							</option>
-						{/each}
-					</select>
-					<button>+</button> -->
+					<div class="client-section">
+						{#if selectedDataItem}
+							<!-- Cliente seleccionado -->
+							<div class="selected-client">
+								<div class="client-info">
+									<strong>{selectedDataItem.razon_social || 'Sin nombre'}</strong>
+									<span class="client-id">ID: {selectedDataItem.id_cliente}</span>
+								</div>
+								<button type="button" class="change-btn" onclick={clearSelection}> Cambiar </button>
+							</div>
+							<!-- Input oculto para enviar el ID en el form -->
+							<input type="hidden" name="id_cliente" value={selectedDataItem.id_cliente} />
+						{/if}
+						<div class='client-section-actions {showClient?'hide':''}'>
+							<Searchbar data={clientes} bind:selectedDataItem />
+							<ButtonA title="Agregar Nuevo" />
+						</div>
+					</div>
 				</label>
 
 				<label>
@@ -43,7 +62,7 @@
 				</label>
 
 				<label>
-					<span>Analisis</span>
+					<span>Análisis</span>
 					<textarea name="analisis" rows="3"></textarea>
 				</label>
 
@@ -55,31 +74,6 @@
 						<option value="media">Media</option>
 						<option value="baja">Baja</option>
 					</select>
-				</label>
-
-				<label>
-					<span>Estado</span>
-					<select name="estado" required>
-						<option value="">Seleccionar</option>
-						<option value="pendiente">Pendiente</option>
-						<option value="en_progreso">En Progreso</option>
-						<option value="completado">Completado</option>
-					</select>
-				</label>
-
-				<label>
-					<span>Inicio</span>
-					<input type="date" name="inicio" required />
-				</label>
-
-				<label>
-					<span>Fin</span>
-					<input type="date" name="fin" required />
-				</label>
-
-				<label>
-					<span>Archivos Relacionados</span>
-					<input type="text" name="archivos_relacionados" placeholder="URLs separadas por comas" />
 				</label>
 
 				<label>
@@ -97,6 +91,13 @@
 {/if}
 
 <style>
+	.hide {
+		display: none;
+	}
+	.client-section-actions {
+		display: flex;
+		gap: var(--a);
+	}
 	.overlay {
 		position: fixed;
 		top: 0;
@@ -162,6 +163,46 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
+	}
+
+	.client-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.selected-client {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.75rem;
+		background: #f0f9ff;
+		border: 1px solid #bae6fd;
+		border-radius: 4px;
+	}
+
+	.client-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.client-id {
+		font-size: 0.875rem;
+		color: #64748b;
+	}
+
+	.change-btn {
+		padding: 0.375rem 0.75rem;
+		background: white;
+		border: 1px solid #cbd5e1;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 0.875rem;
+	}
+
+	.change-btn:hover {
+		background: #f8fafc;
 	}
 
 	input,
