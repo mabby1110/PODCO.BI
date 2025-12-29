@@ -65,7 +65,6 @@ body {
 	backdrop-filter: blur(16px);
 }
 .butter {
-	background-color: var(--color-primary);
 	color: var(--color-text);
 	font-weight: lighter;
 	border: none;

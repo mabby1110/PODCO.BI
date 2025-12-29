@@ -7,8 +7,8 @@
 	// Placeholders seguros
 	const motivo = op?.motivo || 'Motivo no definido';
 	const inicio = op?.inicio || 'Sin fecha';
-	const razon = cliente?.razon_social || 'Cliente sin nombre';
-	const nombreAgente = agente?.nombre || 'Agente desconocido';
+	const razon = op?.id_cliente || 'Cliente sin nombre';
+	const nombreAgente = op?.id_agente || 'Agente desconocido';
 
 	// Estados editables
 	let isExpanded = $state(false);

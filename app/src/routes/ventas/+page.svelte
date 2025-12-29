@@ -3,9 +3,15 @@
 	import { appState } from '$lib/stores/appState.svelte';
 	import CardB from '$lib/components/CardB.svelte';
 	import FMOportunidades from '$lib/components/FMOportunidades.svelte';
+	import Filter from '$lib/components/Filter.svelte';
 
 	let { data } = $props();
-	console.log(data.fases_embudo_ventas);
+	let oportunidades = $derived(data.historial_oportunidades_json.map((item) => ({
+		...item,
+		id_cliente: data.clientes[item.id_cliente].razon_social,
+		id_agente: data.agentes[item.id_agente]?.nombre
+	})));
+	console.log('oportunidades', oportunidades);
 </script>
 
 <div class="page-content">
@@ -14,11 +20,11 @@
 	</div>
 
 	<div class="actions">
-		<ButtonA title="filtro" />
-		<FMOportunidades />
+		<Filter bind:oportunidades />
+		<FMOportunidades clientes={data.clientes} />
 	</div>
 	<div class="op-list">
-		{#each data.historial_oportunidades_json as op}
+		{#each oportunidades as op}
 			<CardB
 				{op}
 				cliente={data.clientes.find((item) => item.id_cliente === op.id_cliente)}
