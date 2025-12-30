@@ -1,6 +1,13 @@
 import { google } from 'googleapis';
 import { GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SHEET_ID } from '$env/static/private';
 import { readFileSync } from 'fs';
+import crypto from 'crypto';
+
+function generateId(prefix = 'BMS') {
+	const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+	const hash = crypto.randomBytes(4).toString('hex');
+	return `${prefix}-${date}-${hash}`;
+}
 
 const credentials = JSON.parse(readFileSync(GOOGLE_APPLICATION_CREDENTIALS, 'utf-8'));
 
@@ -55,14 +62,16 @@ export async function updateRowById(
 	return { rowNumber, updated: newValues };
 }
 export async function appendRow(range: string = 'historial_actividades!A:C', values: any[]) {
+	const id = generateId();
+
 	const response = await sheets.spreadsheets.values.append({
 		spreadsheetId: GOOGLE_SHEET_ID,
 		range,
 		valueInputOption: 'USER_ENTERED',
 		requestBody: {
-			values: [values]
+			values: [[id, ...values]]
 		}
 	});
 
-	return response.data;
+	return { id, response: response.data };
 }

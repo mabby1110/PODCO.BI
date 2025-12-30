@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import AddAction from './AddAction.svelte';
 	import ButtonA from './ButtonA.svelte';
 	import Searchbar from './Searchbar.svelte';
 	let { clientes } = $props();
@@ -51,7 +52,7 @@
 						{/if}
 						<div class='client-section-actions {showClient?'hide':''}'>
 							<Searchbar data={clientes} bind:selectedDataItem />
-							<ButtonA title="Agregar Nuevo" />
+							<AddAction/>
 						</div>
 					</div>
 				</label>

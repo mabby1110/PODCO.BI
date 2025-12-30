@@ -11,7 +11,6 @@
 		id_cliente: data.clientes[item.id_cliente].razon_social,
 		id_agente: data.agentes[item.id_agente]?.nombre
 	})));
-	console.log('oportunidades', oportunidades);
 </script>
 
 <div class="page-content">
