@@ -7,7 +7,20 @@
 	import FormModal from '$lib/components/FormModal.svelte';
 
 	let { data } = $props();
-	console.log(data.actividades_fijas);
+	let weekOffset = $state(0); // 0 = semana actual, 1 = siguiente, -1 = anterior
+
+	// Navegar semanas
+	function previousWeek() {
+		weekOffset -= 1;
+	}
+
+	function nextWeek() {
+		weekOffset += 1;
+	}
+
+	function goToCurrentWeek() {
+		weekOffset = 0;
+	}
 </script>
 
 <div class="page-content">
@@ -20,16 +33,19 @@
 		</CardD>
 	</div>
 	<div class="actions">
+		<button onclick={previousWeek} class="butter">← Semana Anterior</button>
+		<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
+		<button onclick={nextWeek} class="butter">Siguiente Semana →</button>
+		<FormModal />
 		<button onclick={() => appState.toggleDnd()} class="butter">
 			Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
 		</button>
 		<ButtonA title="filtro" />
-		<FormModal />
 	</div>
-	
+
 	<div class="calendar">
 		<CardC>
-			<Calendar googleEvents={data.actividades_fijas} />
+			<Calendar googleEvents={data.actividades} {weekOffset} />
 		</CardC>
 	</div>
 </div>

@@ -3,10 +3,10 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
     console.log("\nActividades loaded\n");
-  const actividades_fijas = await getRange('actividades_fijas!A:D');
+  const actividades = await getRange('historial_actividades!A:G');
   
   return {
-    actividades_fijas
+    actividades
   };
 };
 
