@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 export const load: PageServerLoad = async () => {
 	console.log('\nventas loaded\n');
 	// Obtener los datos, donde la primera fila son los encabezados
-	const historial_oportunidades_array = await getRange('historial_actividades!A:J');
+	const historial_oportunidades_array = await getRange('historial_actividades!A:K');
 
 	if (!historial_oportunidades_array || historial_oportunidades_array.length === 0) {
 		return {

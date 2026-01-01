@@ -19,7 +19,10 @@
 			inicio: row[4], // Formato: "30/12/2025 12:00:00"
 			fin: row[5], // Formato: "31/12/2025 12:00:00"
 			motivo: row[6],
-			historia: row[7]
+			historia: row[7],
+			cotizaciones: row[8],
+			documentos: row[9],
+			fase: row[10]
 		}))
 	);
 

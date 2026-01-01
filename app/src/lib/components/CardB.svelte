@@ -38,6 +38,7 @@
 			break;
 		default:
 			style = 'background-color: var(--color-prospecto);';
+			console.log(op);
 			break;
 	}
 
@@ -64,7 +65,7 @@
 	</div>
 
 	<div class="card-meta">
-		<p>{nombreAgente}, {fase.actual}</p>
+		<p>{nombreAgente}, {fase?.actual}</p>
 	</div>
 
 	{#if isExpanded}

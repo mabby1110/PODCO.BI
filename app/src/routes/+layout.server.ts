@@ -10,10 +10,12 @@ export const load: LayoutServerLoad = async ({ depends }) => {
 	const clientes = makeJson(await getRange('clientes!A:B'));
 	const agentes = makeJson(await getRange('agentes!A:B'));
 	const fases_embudo_ventas = makeJson(await getRange('fases_embudo_ventas!A:C'));
+	const actividades = await getRange('historial_actividades!A:K');
 
 	return {
 		clientes,
 		agentes,
-		fases_embudo_ventas
+		fases_embudo_ventas,
+		actividades
 	};
 };
