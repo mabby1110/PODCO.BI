@@ -146,94 +146,72 @@
 </script>
 
 <div class="calendar-container">
-	<div class="time-grid">
-		<table>
-			<thead>
+	<table>
+		<thead>
+			<tr>
+				<th class="corner">{currentYear}</th>
+				{#each weekDates as date, i}
+					<th>
+						<div class="day-header">
+							<div>{weekdays[i]}</div>
+							<div class="date-label">{formatDate(date).slice(0, 5)}</div>
+						</div>
+					</th>
+				{/each}
+			</tr>
+		</thead>
+		<tbody>
+			{#each hours as hour}
 				<tr>
-					<th class="corner">{currentYear}</th>
-					{#each weekDates as date, i}
-						<th>
-							<div class="day-header">
-								<div>{weekdays[i]}</div>
-								<div class="date-label">{formatDate(date).slice(0, 5)}</div>
-							</div>
-						</th>
+					<td class="hour-cell">{hour}:00</td>
+					{#each weekDates as date}
+						{@const dateStr = formatDate(date)}
+						<td
+							class="event-cell"
+							use:dropzone={{
+								on_dropzone: (eventId: string) => handleDrop(eventId, hour, dateStr)
+							}}
+						>
+							{#if getEvent(hour, dateStr)}
+								{@const event = getEvent(hour, dateStr)}
+								<div class="event-wrapper" use:draggable={event.id}>
+									<CardA {event} />
+								</div>
+							{/if}
+						</td>
 					{/each}
 				</tr>
-			</thead>
-			<tbody>
-				{#each hours as hour}
-					<tr>
-						<td class="hour-cell">{hour}:00</td>
-						{#each weekDates as date}
-							{@const dateStr = formatDate(date)}
-							<td
-								class="event-cell"
-								use:dropzone={{
-									on_dropzone: (eventId: string) => handleDrop(eventId, hour, dateStr)
-								}}
-							>
-								{#if getEvent(hour, dateStr)}
-									{@const event = getEvent(hour, dateStr)}
-									<div class="event-wrapper" use:draggable={event.id}>
-										<CardA {event} />
-									</div>
-								{/if}
-							</td>
-						{/each}
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</div>
+			{/each}
+		</tbody>
+	</table>
 </div>
 
 <style>
 	.calendar-container {
-		display: flex;
-		flex-direction: column;
+		flex-grow: 1;
 		gap: 16px;
 	}
 
-	.week-navigation {
-		display: flex;
-		gap: 8px;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.week-navigation button {
-		padding: 8px 16px;
-		cursor: pointer;
-	}
-
-	.year-display {
-		font-weight: bold;
-		padding: 8px 16px;
-		font-size: 1.1em;
-	}
-
-	.time-grid {
+	.calendar-container {
 		overflow: auto;
 		display: flex;
 	}
 
-	.time-grid table {
+	.calendar-container table {
 		flex-grow: 1;
 		border-collapse: collapse;
 		border-radius: 8px;
 	}
 
-	.time-grid th,
-	.time-grid td {
+	.calendar-container th,
+	.calendar-container td {
 		position: sticky;
 		top: 0;
 		background-color: transparent;
-		outline: 1px solid rgba(0, 0, 0, 0.2);
 		gap: 1px;
 	}
 
-	.time-grid th {
+	.calendar-container th {
 		padding: 8px;
 		position: sticky;
 		top: 0;
@@ -254,7 +232,7 @@
 		font-weight: normal;
 	}
 
-	.time-grid .corner {
+	.calendar-container .corner {
 		position: sticky;
 		top: 0;
 		left: 0;
@@ -274,8 +252,9 @@
 
 	.event-cell {
 		position: relative;
-		width: 60vw;
-		min-height: var(--e);
+		min-width: var(--h);
+		border-right: 1px solid var(--color-secondary);
+		border-bottom: 1px solid var(--color-secondary);
 	}
 
 	.event-wrapper {

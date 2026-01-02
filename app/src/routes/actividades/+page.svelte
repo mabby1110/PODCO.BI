@@ -5,6 +5,7 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
 	import FormModal from '$lib/components/FormModal.svelte';
+	import { selectedEvent } from '$lib/stores/selectedEvent.js';
 
 	let { data } = $props();
 	let weekOffset = $state(0); // 0 = semana actual, 1 = siguiente, -1 = anterior
@@ -28,25 +29,28 @@
 		<h1>Actividades</h1>
 	</div>
 	<div class="details">
+		{#if $selectedEvent}
 		<CardD>
 			<p>detalles</p>
+			<p>{$selectedEvent.historia}</p>
 		</CardD>
+		{/if}
 	</div>
 	<div class="actions">
-		<button onclick={previousWeek} class="butter">← Semana Anterior</button>
-		<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
-		<button onclick={nextWeek} class="butter">Siguiente Semana →</button>
 		<FormModal />
 		<button onclick={() => appState.toggleDnd()} class="butter">
-			Editar: {$appState.dnd ? 'Activado' : 'Desactivado'}
+			Editar: {$appState.dnd ? 'si' : 'no'}
 		</button>
 		<ButtonA title="filtro" />
+		<div class="calendar-actions">
+			<button onclick={previousWeek} class="butter">← Anterior</button>
+			<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
+			<button onclick={nextWeek} class="butter">Siguiente →</button>
+		</div>
 	</div>
 
 	<div class="calendar">
-		<CardC>
-			<Calendar googleEvents={data.actividades} {weekOffset} />
-		</CardC>
+		<Calendar googleEvents={data.actividades} {weekOffset} />
 	</div>
 </div>
 
@@ -77,7 +81,12 @@
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
 		flex-grow: 1;
-		overflow: hidden;
-		min-height: var(--h);
+		overflow: auto;
+		display: flex;
+	}
+	.calendar-actions {
+		width: 100%;
+		display: flex;
+		gap: var(--a);
 	}
 </style>
