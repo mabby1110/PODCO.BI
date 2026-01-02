@@ -65,6 +65,7 @@
 		cursor: pointer;
 		text-align: left;
 		height: var(--f);
+		backdrop-filter: blur(16px);
 	}
 
 	.meta {

@@ -3,7 +3,7 @@
 	import { draggable, dropzone } from '$lib/actions/dnd';
 	import { filtrarConsecutivo } from '$lib/utils/util';
 
-	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
+	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
 	const hoursRangePerDay = { start: 8, end: 18 };
 	const SLOT_MINUTES = 15;
 	const CELL_HEIGHT = 48; // px, ajusta a tu CSS real
@@ -74,7 +74,7 @@
 		const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 		monday.setDate(now.getDate() + diff + offset * 7);
 
-		return Array.from({ length: 5 }, (_, i) => {
+		return Array.from({ length: 7 }, (_, i) => {
 			const date = new Date(monday);
 			date.setDate(monday.getDate() + i);
 			date.setHours(0, 0, 0, 0); // Asegurar medianoche
