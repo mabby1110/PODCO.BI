@@ -52,11 +52,6 @@
 			: eventListOriginal
 	);
 
-	$effect(() => {
-		console.log('atributo: ', filterStore.atributo !== '', filterStore.atributo);
-		console.log('event list: ', eventList);
-	});
-
 	const weekDates = $derived(getWeekDates(weekOffset));
 
 	// Obtener el año de la semana actual
@@ -165,6 +160,11 @@
 		const p = parseDateTimeString(event.inicio);
 		return p && p.date === dateStr && p.hour === hour && p.minute === minute;
 	}
+
+	$effect(() => {
+		console.log('filterStore en calendario: ', filterStore.atributo !== '', filterStore.atributo);
+		console.log('event list: ', eventList.length);
+	});
 </script>
 
 <div class="calendar-container">

@@ -71,6 +71,7 @@ body {
 	border-radius: var(--a);
 	padding: var(--a);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
+	background-color: var(--color-primary);
 	backdrop-filter: blur(16px);
 }
 @media (min-width: 500px) {
