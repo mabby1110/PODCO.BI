@@ -8,8 +8,7 @@ function generateId(prefix = 'BMS') {
 	const hash = crypto.randomBytes(4).toString('hex');
 	return `${prefix}-${date}-${hash}`;
 }
-
-const credentials = JSON.parse(readFileSync(GOOGLE_APPLICATION_CREDENTIALS, 'utf-8'));
+const credentials = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS);
 
 const auth = new google.auth.GoogleAuth({
 	credentials,
