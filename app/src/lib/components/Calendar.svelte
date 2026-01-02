@@ -2,6 +2,7 @@
 	import CardA from './CardA.svelte';
 	import { draggable, dropzone } from '$lib/actions/dnd';
 	import { filtrarConsecutivo } from '$lib/utils/util';
+	import { filterStore } from '$lib/stores/filterStore.svelte';
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
 	const hoursRangePerDay = { start: 8, end: 18 };
@@ -27,7 +28,8 @@
 	} = $props();
 
 	const [headers, ...rows] = googleEvents;
-	let eventList = $state(
+	// Datos originales sin filtrar
+	const eventListOriginal = $state(
 		rows.map((row) => ({
 			id: row[0],
 			id_cliente: row[1],
@@ -42,7 +44,18 @@
 			fase: row[10]
 		}))
 	);
-	// eventList = filtrarConsecutivo('2', 'id_agente', eventList);
+
+	// Lista filtrada derivada reactivamente
+	const eventList = $derived(
+		filterStore.atributo !== ''
+			? filtrarConsecutivo(filterStore.atributo, 'id_agente', eventListOriginal)
+			: eventListOriginal
+	);
+
+	$effect(() => {
+		console.log('atributo: ', filterStore.atributo !== '', filterStore.atributo);
+		console.log('event list: ', eventList);
+	});
 
 	const weekDates = $derived(getWeekDates(weekOffset));
 
@@ -152,12 +165,6 @@
 		const p = parseDateTimeString(event.inicio);
 		return p && p.date === dateStr && p.hour === hour && p.minute === minute;
 	}
-
-	// Debug logs (después de todas las declaraciones)
-	$effect(() => {
-		console.log('eventList', eventList);
-		console.log('weekEvents', weekEvents);
-	});
 </script>
 
 <div class="calendar-container">

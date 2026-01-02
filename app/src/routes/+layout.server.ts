@@ -1,8 +1,9 @@
 import { getRange } from '$lib/server/googleApi';
 import { makeJson } from '$lib/utils/util';
+import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ depends }) => {
+export const load: LayoutServerLoad = async ({ depends, url }) => {
 	depends('clientes');
 
 	console.log('\nlayout data loaded\n');
@@ -11,7 +12,9 @@ export const load: LayoutServerLoad = async ({ depends }) => {
 	const agentes = makeJson(await getRange('agentes!A:B'));
 	const fases_embudo_ventas = makeJson(await getRange('fases_embudo_ventas!A:C'));
 	const actividades = await getRange('historial_actividades!A:K');
-
+	if (url.pathname !== '/actividades') {
+		throw redirect(307, '/actividades');
+	}
 	return {
 		clientes,
 		agentes,

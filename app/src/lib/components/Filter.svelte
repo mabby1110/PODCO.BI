@@ -1,54 +1,37 @@
 <script lang="ts">
-	interface DataItem {
-		[key: string]: string | number | null | undefined;
-	}
+	import { page } from '$app/state';
+	import { filterStore } from '$lib/stores/filterStore.svelte';
 
-	let { data = $bindable([]) }: { data: DataItem[] } = $props();
-	let keyword = $state('');
-	let originalData = $state<DataItem[]>([]);
+	const agentes = $derived(page.data.agentes ?? []);
+	// Variable local para el bind - debe ser string para el select
+	let selectedAtributo = $state(filterStore.atributo?.toString() ?? '');
+	let keyword = $state(filterStore.keyword ?? '');
 
-	// Guardar datos originales al montar
+	// Sincronizar cambios de la variable local al store
 	$effect(() => {
-		if (originalData.length === 0 && data.length > 0) {
-			originalData = [...data];
-		}
+		// Convierte a número si no está vacío, sino ''
+		filterStore.atributo = selectedAtributo !== '' ? Number(selectedAtributo) : '';
 	});
 
-	// Filtrar y actualizar data automáticamente
 	$effect(() => {
-		const searchTerm = keyword.toLowerCase().trim();
-		
-		if (searchTerm === '') {
-			data = originalData;
-		} else {
-			data = originalData.filter((item) => {
-				return Object.values(item).some((value) => {
-					if (value === null || value === undefined) return false;
-					return String(value).toLowerCase().includes(searchTerm);
-				});
-			});
-		}
+		filterStore.keyword = keyword;
 	});
 </script>
 
-<div class="butter">
-	<input 
-		type="text" 
-		bind:value={keyword} 
-		placeholder="Buscar oportunidades..."
-	/>
-</div>
+<div>
+	{filterStore.keyword}{filterStore.atributo}
+	<select bind:value={selectedAtributo} class="butter">
+		<option value="">seleccionar</option>
+		{#each agentes as agente}
+			{#if agente?.id_agente !== undefined}
+				<option value={String(agente.id_agente)}>{agente.nombre}</option>
+			{/if}
+		{/each}
+	</select>
 
-<style>
-	.butter {
-		padding: 0;
-		overflow: hidden;
-	}
-	.butter input {
-		width: 100%;
-		height: 100%;
-		border: none;
-		border-radius: var(--a);
-		padding: 0 var(--a);
-	}
-</style>
+	<!-- <input
+		type="text"
+		bind:value={keyword}
+		placeholder="Buscar oportunidades..."
+	/> -->
+</div>

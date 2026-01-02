@@ -7,9 +7,9 @@
 	let { event } = $props();
 
 	const { clientes, agentes } = $derived(page.data);
-
 	const razon_social = clientes[event.id_cliente]?.razon_social ?? '';
-	const agente = agentes[event.id_agente]?.nombre ?? '';
+	const agente = agentes.find((e)=>e.id_agente==event.id_agente).nombre ?? '';
+	console.log(event.id_agente); 
 	const isDndEnabled = $derived($appState.dnd);
 	let style;
 	switch (event?.fase) {

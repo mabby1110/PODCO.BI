@@ -6,6 +6,7 @@
 	import { appState } from '$lib/stores/appState.svelte';
 	import FormModal from '$lib/components/FormModal.svelte';
 	import { selectedEvent } from '$lib/stores/selectedEvent.js';
+	import Filter from '$lib/components/Filter.svelte';
 
 	let { data } = $props();
 	let weekOffset = $state(0); // 0 = semana actual, 1 = siguiente, -1 = anterior
@@ -47,7 +48,7 @@
 		<button onclick={() => appState.toggleDnd()} class="butter">
 			Editar: {$appState.dnd ? 'si' : 'no'}
 		</button>
-		<ButtonA title="filtro" />
+		<Filter/>
 	</div>
 
 	<div class="calendar">
