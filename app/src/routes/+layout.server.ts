@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async ({ depends, url }) => {
 	const agentes = makeJson(await getRange('agentes!A:B'));
 	const fases_embudo_ventas = makeJson(await getRange('fases_embudo_ventas!A:C'));
 	const actividades = await getRange('historial_actividades!A:K');
-	if (url.pathname !== '/actividades') {
+	if (url.pathname == '/') {
 		throw redirect(307, '/actividades');
 	}
 	return {

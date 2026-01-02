@@ -74,6 +74,12 @@ body {
 	background-color: var(--color-primary);
 	backdrop-filter: blur(16px);
 }
+.max {
+	min-width: var(--h);
+}
+.minimized {
+	width: fit-content;
+}
 @media (min-width: 500px) {
 	html,
 	body {

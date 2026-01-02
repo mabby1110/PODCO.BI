@@ -3,6 +3,7 @@
 	import { draggable, dropzone } from '$lib/actions/dnd';
 	import { filtrarConsecutivo } from '$lib/utils/util';
 	import { filterStore } from '$lib/stores/filterStore.svelte';
+	import { appState } from '$lib/stores/appState.svelte';
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
 	const hoursRangePerDay = { start: 8, end: 18 };
@@ -191,7 +192,7 @@
 					{#each weekDates as date}
 						{@const dateStr = formatDate(date)}
 						<td
-							class="event-cell"
+							class="{$appState.calendarCards ? 'max' : 'minimize'} event-cell"
 							use:dropzone={{
 								on_dropzone: (eventId: string) => handleDrop(eventId, h.hour, h.minute, dateStr)
 							}}
@@ -237,7 +238,6 @@
 	.calendar-container th,
 	.calendar-container td {
 		position: sticky;
-		top: 0;
 		background-color: transparent;
 		gap: 1px;
 	}
@@ -276,14 +276,11 @@
 		z-index: 9;
 		padding: 8px;
 		text-align: center;
-		width: var(--i);
-		min-width: var(--e);
 		backdrop-filter: blur(16px);
 	}
 
 	.event-cell {
 		position: relative;
-		min-width: var(--h);
 		border-right: 1px solid var(--color-secondary);
 		border-bottom: 1px solid var(--color-secondary);
 	}

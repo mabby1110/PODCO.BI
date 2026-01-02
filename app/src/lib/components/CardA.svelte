@@ -8,7 +8,7 @@
 
 	const { clientes, agentes } = $derived(page.data);
 	const razon_social = clientes[event.id_cliente]?.razon_social ?? '';
-	const agente = agentes.find((e)=>e.id_agente==event.id_agente).nombre ?? '';
+	const agente = agentes.find((e) => e.id_agente == event.id_agente).nombre ?? '';
 	const isDndEnabled = $derived($appState.dnd);
 	let style;
 	switch (event?.fase) {
@@ -39,31 +39,39 @@
 	}
 </script>
 
-<button {style} use:draggable={{ data: event.id, enabled: isDndEnabled }} onclick={select}>
-	<div class="header">
-		<strong>{razon_social}</strong>
-	</div>
+<button {style} class="{$appState.calendarCards?'':'minimize'}" use:draggable={{ data: event.id, enabled: isDndEnabled }} onclick={select}>
+	{#if $appState.calendarCards}
+		<div class="header">
+			<strong>{razon_social}</strong>
+		</div>
 
-	<div class="meta">
-		<span>{agente}</span>
-		<span>{event?.inicio}</span>
-	</div>
+		<div class="meta">
+			<span>{agente}</span>
+			<span>{event?.inicio}</span>
+		</div>
 
-	<p class="motivo">{event?.motivo}</p>
+		<p class="motivo">{event?.motivo}</p>
+	{:else}
+		<div class="meta">
+			<span>{agente}</span>
+		</div>
+	{/if}
 </button>
 
 <style>
-	button {
+button {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.4rem;
 		width: 100%;
+		min-width: fit-content;
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
 		padding: var(--a);
 		cursor: pointer;
 		text-align: left;
-		height: var(--f);
+		height: auto;
+		min-height: var(--f);
 		backdrop-filter: blur(16px);
 	}
 

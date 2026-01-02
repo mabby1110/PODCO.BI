@@ -39,16 +39,20 @@
 		{/if}
 	</div>
 	<div class="actions">
+		<FormModal />
+		<button onclick={() => appState.toggleDnd()} class="butter">
+			Editar: {$appState.dnd ? 'si' : 'no'}
+		</button>
+		<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter">
+			{$appState.calendarCards ? 'minimizar' : 'expandir'}
+		</button>
+		<Filter/>
+		
 		<div class="calendar-actions">
 			<button onclick={previousWeek} class="butter">← Anterior</button>
 			<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
 			<button onclick={nextWeek} class="butter">Siguiente →</button>
 		</div>
-		<FormModal />
-		<button onclick={() => appState.toggleDnd()} class="butter">
-			Editar: {$appState.dnd ? 'si' : 'no'}
-		</button>
-		<Filter/>
 	</div>
 
 	<div class="calendar">
@@ -89,5 +93,6 @@
 	.calendar-actions {
 		display: flex;
 		gap: var(--a);
+		flex-grow: 1;
 	}
 </style>
