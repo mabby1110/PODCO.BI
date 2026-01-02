@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CardA from './CardA.svelte';
 	import { draggable, dropzone } from '$lib/actions/dnd';
+	import { filtrarConsecutivo } from '$lib/utils/util';
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
 	const hoursRangePerDay = { start: 8, end: 18 };
@@ -25,6 +26,7 @@
 			fase: row[10]
 		}))
 	);
+	eventList =  filtrarConsecutivo('2', 'id_agente', eventList);
 
 	const weekDates = $derived(getWeekDates(weekOffset));
 
@@ -42,7 +44,7 @@
 			return weekDateStrings.includes(parsed.date);
 		});
 	});
-	console.log('weekEvents', eventList);
+
 	const hours = $derived(
 		Array.from(
 			{ length: hoursRangePerDay.end - hoursRangePerDay.start },

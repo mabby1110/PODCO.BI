@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { selectedEvent } from "$lib/stores/selectedEvent";
+	import { slide } from "svelte/transition";
+
 	let { children } = $props();
 </script>
 
-<button class="panel">
+<button class="panel" transition:slide onclick={()=>$selectedEvent=null}>
 	{#if children}
 		{@render children()}
 	{:else}

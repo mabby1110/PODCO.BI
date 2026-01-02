@@ -21,3 +21,16 @@ export function makeJson(data: any[][] | null | undefined): Record<string, any>[
         return obj;
     });
 }
+
+type Evento = Record<string, any>;
+
+export function filtrarConsecutivo<T extends Evento>(
+	keyword: string | number,
+	atributo: keyof T,
+	eventos: T[]
+): T[] {
+	const k = String(keyword);
+	return eventos.filter(e =>
+		String(e[atributo] ?? '').includes(k)
+	);
+}
