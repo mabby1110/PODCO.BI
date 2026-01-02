@@ -5,6 +5,22 @@
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'];
 	const hoursRangePerDay = { start: 8, end: 18 };
+	const SLOT_MINUTES = 15;
+	const CELL_HEIGHT = 48; // px, ajusta a tu CSS real
+
+	const hours = $derived(
+		Array.from(
+			{ length: ((hoursRangePerDay.end - hoursRangePerDay.start) * 60) / SLOT_MINUTES },
+			(_, i) => {
+				const total = hoursRangePerDay.start * 60 + i * SLOT_MINUTES;
+				return {
+					hour: Math.floor(total / 60),
+					minute: total % 60
+				};
+			}
+		)
+	);
+
 	const {
 		googleEvents,
 		weekOffset // 0 = semana actual, 1 = siguiente, -1 = anterior
@@ -26,7 +42,7 @@
 			fase: row[10]
 		}))
 	);
-	eventList =  filtrarConsecutivo('2', 'id_agente', eventList);
+	eventList = filtrarConsecutivo('2', 'id_agente', eventList);
 
 	const weekDates = $derived(getWeekDates(weekOffset));
 
@@ -44,13 +60,6 @@
 			return weekDateStrings.includes(parsed.date);
 		});
 	});
-
-	const hours = $derived(
-		Array.from(
-			{ length: hoursRangePerDay.end - hoursRangePerDay.start },
-			(_, i) => hoursRangePerDay.start + i
-		)
-	);
 
 	// Obtener las fechas de la semana (lunes a viernes)
 	function getWeekDates(offset: number = 0) {
@@ -81,65 +90,48 @@
 	}
 
 	// Parsear fecha y hora del formato "DD/MM/YYYY HH:MM:SS" o "D/MM/YYYY HH:MM:SS"
-	function parseDateTimeString(dateTimeStr: string): { date: string; hour: number } | null {
-		if (!dateTimeStr) return null;
+	function parseDateTimeString(
+		dateTimeStr: string
+	): { date: string; hour: number; minute: number } | null {
+		const [datePart, timePart] = dateTimeStr?.trim().split(' ') ?? [];
+		if (!datePart || !timePart) return null;
 
-		const trimmed = dateTimeStr.trim();
-		const parts = trimmed.split(' ');
-
-		if (parts.length !== 2) return null;
-
-		const datePart = parts[0]; // "30/12/2025" o "3/01/2026"
-		const timePart = parts[1]; // "12:00:00"
-
-		const timeComponents = timePart.split(':').map(Number);
-		if (timeComponents.length < 2) return null;
-
-		const [hours] = timeComponents;
-
-		// Normalizar la fecha para que siempre tenga formato DD/MM/YYYY
-		const dateComponents = datePart.split('/');
-		if (dateComponents.length !== 3) return null;
-
-		const [day, month, year] = dateComponents;
-		const normalizedDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+		const [h, m] = timePart.split(':').map(Number);
+		const [d, mo, y] = datePart.split('/');
 
 		return {
-			date: normalizedDate,
-			hour: hours
+			date: `${d.padStart(2, '0')}/${mo.padStart(2, '0')}/${y}`,
+			hour: h,
+			minute: m
 		};
 	}
-	// Obtener evento para una hora y fecha específica
-	function getEvent(hour: number, dateStr: string) {
-		return weekEvents.find((event) => {
-			const parsed = parseDateTimeString(event.inicio);
-			if (!parsed) return false;
 
-			return parsed.date === dateStr && parsed.hour === hour;
+	function getEvent(hour: number, minute: number, dateStr: string) {
+		return weekEvents.find((event) => {
+			const p = parseDateTimeString(event.inicio);
+			return p && p.date === dateStr && p.hour === hour && p.minute === minute;
 		});
 	}
 
-	// Manejar el drop de eventos
-	function handleDrop(eventId: string, newHour: number, dateStr: string) {
-		const eventIndex = eventList.findIndex((event) => event.id === eventId);
-		if (eventIndex === -1) return;
+	function handleDrop(eventId: string, hour: number, minute: number, dateStr: string) {
+		const i = eventList.findIndex((e) => e.id === eventId);
+		if (i === -1) return;
 
-		const existingEvent = getEvent(newHour, dateStr);
-		if (existingEvent && existingEvent.id !== eventId) return;
-
-		const event = eventList[eventIndex];
-
-		// Formatear la nueva hora
-		const newHourStr = String(newHour).padStart(2, '0');
-		const newTimeStr = `${newHourStr}:00:00`;
-
-		// Actualizar evento con nueva fecha y hora
-		eventList[eventIndex] = {
-			...event,
-			inicio: `${dateStr} ${newTimeStr}`
+		eventList[i] = {
+			...eventList[i],
+			inicio: `${dateStr} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`
 		};
 	}
 
+	function durationToSlots(d: string): number {
+		const [h, m] = d.split(':').map(Number);
+		return Math.max(1, (h * 60 + m) / SLOT_MINUTES);
+	}
+
+	function isEventStart(hour: number, minute: number, dateStr: string, event) {
+		const p = parseDateTimeString(event.inicio);
+		return p && p.date === dateStr && p.hour === hour && p.minute === minute;
+	}
 	// Debug logs (después de todas las declaraciones)
 	$effect(() => {
 		console.log('eventList', eventList);
@@ -163,22 +155,31 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each hours as hour}
+			{#each hours as h}
 				<tr>
-					<td class="hour-cell">{hour}:00</td>
+					<td class="hour-cell">
+						{String(h.hour).padStart(2, '0')}:{String(h.minute).padStart(2, '0')}
+					</td>
 					{#each weekDates as date}
 						{@const dateStr = formatDate(date)}
 						<td
 							class="event-cell"
 							use:dropzone={{
-								on_dropzone: (eventId: string) => handleDrop(eventId, hour, dateStr)
+								on_dropzone: (eventId: string) => handleDrop(eventId, h.hour, h.minute, dateStr)
 							}}
 						>
-							{#if getEvent(hour, dateStr)}
-								{@const event = getEvent(hour, dateStr)}
-								<div class="event-wrapper" use:draggable={event.id}>
-									<CardA {event} />
-								</div>
+							{#if getEvent(h.hour, h.minute, dateStr)}
+								{@const event = getEvent(h.hour, h.minute, dateStr)}
+
+								{#if isEventStart(h.hour, h.minute, dateStr, event)}
+									<div
+										class="event-wrapper"
+										style={`height:${durationToSlots(event.duracion) * CELL_HEIGHT}px`}
+										use:draggable={event.id}
+									>
+										<CardA {event} />
+									</div>
+								{/if}
 							{/if}
 						</td>
 					{/each}
@@ -259,7 +260,11 @@
 		border-bottom: 1px solid var(--color-secondary);
 	}
 
-	.event-wrapper {
-		width: 100%;
-	}
+.event-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
 </style>
