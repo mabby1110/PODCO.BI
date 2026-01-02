@@ -113,13 +113,33 @@
 		});
 	}
 
-	function handleDrop(eventId: string, hour: number, minute: number, dateStr: string) {
+	async function handleDrop(eventId: string, hour: number, minute: number, dateStr: string) {
 		const i = eventList.findIndex((e) => e.id === eventId);
 		if (i === -1) return;
 
+		const inicio = `${dateStr} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`;
+
+		// calcular fin según duración
+		const slots = durationToSlots(eventList[i].duracion);
+		const base = new Date(
+			`${dateStr.split('/').reverse().join('-')}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`
+		);
+		base.setMinutes(base.getMinutes() + slots * SLOT_MINUTES);
+
+		const fin = `${dateStr} ${String(base.getHours()).padStart(2, '0')}:${String(base.getMinutes()).padStart(2, '0')}:00`;
+
+		// persistir
+		await fetch('/api/editar', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id: eventId, inicio, fin })
+		});
+
+		// estado local
 		eventList[i] = {
 			...eventList[i],
-			inicio: `${dateStr} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`
+			inicio,
+			fin
 		};
 	}
 
@@ -132,7 +152,7 @@
 		const p = parseDateTimeString(event.inicio);
 		return p && p.date === dateStr && p.hour === hour && p.minute === minute;
 	}
-	
+
 	// Debug logs (después de todas las declaraciones)
 	$effect(() => {
 		console.log('eventList', eventList);
@@ -261,11 +281,11 @@
 		border-bottom: 1px solid var(--color-secondary);
 	}
 
-.event-wrapper {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 2;
-}
+	.event-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+	}
 </style>
