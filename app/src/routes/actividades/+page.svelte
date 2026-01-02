@@ -33,6 +33,7 @@
 		<CardD>
 			<p>detalles</p>
 			<p>{$selectedEvent.historia}</p>
+			<p>{$selectedEvent.id}</p>
 		</CardD>
 		{/if}
 	</div>

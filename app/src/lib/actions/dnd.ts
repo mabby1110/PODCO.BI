@@ -201,13 +201,27 @@ export function dropzone(node: HTMLElement, options: DropzoneOptions = {}) {
 	function handle_dragenter(e: DragEvent) {
 		const isDndEnabled = get(appState).dnd;
 		if (!state.enabled || !isDndEnabled) return;
-		(e.target as HTMLElement).classList.add(state.dragoverClass!);
+		node.classList.add(state.dragoverClass!);
 	}
 
 	function handle_dragleave(e: DragEvent) {
 		const isDndEnabled = get(appState).dnd;
 		if (!state.enabled || !isDndEnabled) return;
-		(e.target as HTMLElement).classList.remove(state.dragoverClass!);
+		node.classList.remove(state.dragoverClass!);
+	}
+
+	function handle_drop(e: DragEvent) {
+		const isDndEnabled = get(appState).dnd;
+		if (!state.enabled || !isDndEnabled) return;
+
+		e.preventDefault();
+
+		const data = e.dataTransfer?.getData('text/plain');
+		node.classList.remove(state.dragoverClass!);
+
+		if (state.on_dropzone && data) {
+			state.on_dropzone(data, e);
+		}
 	}
 
 	function handle_dragover(e: DragEvent) {
@@ -218,18 +232,6 @@ export function dropzone(node: HTMLElement, options: DropzoneOptions = {}) {
 			e.dataTransfer.dropEffect = state.dropEffect!;
 		}
 	}
-
-	function handle_drop(e: DragEvent) {
-		const isDndEnabled = get(appState).dnd;
-		if (!state.enabled || !isDndEnabled) return;
-		e.preventDefault();
-		const data = e.dataTransfer?.getData('text/plain');
-		(e.target as HTMLElement).classList.remove(state.dragoverClass!);
-		if (state.on_dropzone && data) {
-			state.on_dropzone(data, e);
-		}
-	}
-
 	// ===== TOUCH (Mobile/Tablet) =====
 	function handle_touchdrop(e: CustomEvent) {
 		const isDndEnabled = get(appState).dnd;

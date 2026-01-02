@@ -42,7 +42,7 @@
 			fase: row[10]
 		}))
 	);
-	eventList = filtrarConsecutivo('2', 'id_agente', eventList);
+	// eventList = filtrarConsecutivo('2', 'id_agente', eventList);
 
 	const weekDates = $derived(getWeekDates(weekOffset));
 
@@ -132,6 +132,7 @@
 		const p = parseDateTimeString(event.inicio);
 		return p && p.date === dateStr && p.hour === hour && p.minute === minute;
 	}
+	
 	// Debug logs (después de todas las declaraciones)
 	$effect(() => {
 		console.log('eventList', eventList);
