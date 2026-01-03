@@ -52,8 +52,9 @@
 
 		<p class="motivo">{event?.motivo}</p>
 	{:else}
-		<div class="meta">
-			<span>{agente}</span>
+		<div class="meta-min">
+			<span class="meta-item">{agente}</span>
+			<span class="meta-item">{event?.motivo}</span>
 		</div>
 	{/if}
 </button>
@@ -64,13 +65,11 @@ button {
 		flex-wrap: wrap;
 		gap: 0.4rem;
 		width: 100%;
-		min-width: fit-content;
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
 		padding: var(--a);
 		cursor: pointer;
-		text-align: left;
-		height: auto;
+		text-align: right;
 		min-height: var(--f);
 		backdrop-filter: blur(16px);
 	}
@@ -81,7 +80,16 @@ button {
 		font-size: 0.75rem;
 		opacity: 0.8;
 	}
-
+	.meta-min {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		text-align: left;
+	}
+	.meta-item {
+		flex-grow: 1;
+	}
 	.motivo {
 		font-size: 0.8rem;
 		opacity: 0.9;

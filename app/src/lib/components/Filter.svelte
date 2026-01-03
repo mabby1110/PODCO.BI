@@ -19,7 +19,6 @@
 </script>
 
 <div>
-	{filterStore.keyword}{filterStore.atributo}
 	<select bind:value={selectedAtributo} class="butter">
 		<option value="">seleccionar</option>
 		{#each agentes as agente}

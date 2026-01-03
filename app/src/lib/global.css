@@ -6,6 +6,7 @@
 	--color-contrast: rgba(0, 0, 105, 0.8);
 	--color-title: #000000;
 	--color-text: #000000;
+	--color-muted: #272727;
 	--color-error: #ff0000bb;
 	--color-success: #05a941bb;
 	--color-muted: #babababb;
@@ -64,7 +65,6 @@ body {
 }
 .butter {
 	color: var(--color-text);
-	font-weight: lighter;
 	border: none;
 	height: var(--d);
 	min-width: var(--f);
@@ -77,8 +77,8 @@ body {
 .max {
 	min-width: var(--h);
 }
-.minimized {
-	width: fit-content;
+.minimize {
+	min-width: var(--f);
 }
 @media (min-width: 500px) {
 	html,

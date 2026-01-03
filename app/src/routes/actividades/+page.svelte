@@ -7,6 +7,8 @@
 	import FormModal from '$lib/components/FormModal.svelte';
 	import { selectedEvent } from '$lib/stores/selectedEvent.js';
 	import Filter from '$lib/components/Filter.svelte';
+	import CalendarList from '$lib/components/CalendarList.svelte';
+	import FMOportunidades from '$lib/components/FMOportunidades.svelte';
 
 	let { data } = $props();
 	let weekOffset = $state(0); // 0 = semana actual, 1 = siguiente, -1 = anterior
@@ -31,33 +33,44 @@
 	</div>
 	<div class="details">
 		{#if $selectedEvent}
-		<CardD>
-			<p>detalles</p>
-			<p>{$selectedEvent.historia}</p>
-			<p>{$selectedEvent.id}</p>
-		</CardD>
+			<CardD>
+				<p>detalles</p>
+				<p>{$selectedEvent.historia}</p>
+				<p>{$selectedEvent.id}</p>
+			</CardD>
 		{/if}
 	</div>
-	<div class="actions">
-		<FormModal />
-		<button onclick={() => appState.toggleDnd()} class="butter">
-			Editar: {$appState.dnd ? 'si' : 'no'}
-		</button>
-		<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter">
-			{$appState.calendarCards ? 'minimizar' : 'expandir'}
-		</button>
-		<Filter/>
-		
-		<div class="calendar-actions">
-			<button onclick={previousWeek} class="butter">← Anterior</button>
-			<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
-			<button onclick={nextWeek} class="butter">Siguiente →</button>
-		</div>
-	</div>
 
-	<div class="calendar">
-		<Calendar googleEvents={data.actividades} {weekOffset} />
+	<div class="actions">
+		<button onclick={() => appState.toggleCalendarView()} class="butter">
+			{$appState.calendarView ? 'ver lista' : 'ver calendario'}
+		</button>
+		<FormModal />
+		{#if $appState.calendarView}
+			<Filter />
+			<button onclick={() => appState.toggleDnd()} class="butter">
+				Editar: {$appState.dnd ? 'si' : 'no'}
+			</button>
+			<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter">
+				{$appState.calendarCards ? 'minimizar' : 'expandir'}
+			</button>
+
+			<div class="calendar-actions">
+				<button onclick={previousWeek} class="butter">← Anterior</button>
+				<button onclick={goToCurrentWeek} class="butter">Semana Actual</button>
+				<button onclick={nextWeek} class="butter">Siguiente →</button>
+			</div>
+		{:else}
+			<Filter />
+		{/if}
 	</div>
+	{#if $appState.calendarView}
+		<div class="calendar">
+			<Calendar googleEvents={data.actividades} {weekOffset} />
+		</div>
+	{:else}
+		<CalendarList {data} />
+	{/if}
 </div>
 
 <style>

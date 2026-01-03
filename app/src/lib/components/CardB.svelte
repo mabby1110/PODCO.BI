@@ -1,23 +1,26 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { slide } from 'svelte/transition';
 	import EditableField from './EditableField.svelte';
 
-	let { op, cliente, agente, fase } = $props();
+	let { event } = $props();
 
 	// Placeholders seguros
-	const motivo = op?.motivo || 'Motivo no definido';
-	const inicio = op?.inicio || 'Sin fecha';
-	const razon = op?.id_cliente || 'Cliente sin nombre';
-	const nombreAgente = op?.id_agente || 'Agente desconocido';
+	const motivo = event?.motivo || 'Motivo no definido';
+	const inicio = event?.inicio || 'Sin fecha';
+	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
+	const razon_social = clientes[event.id_cliente]?.razon_social ?? '';
+	const agente = agentes.find((e) => e.id_agente == event.id_agente).nombre ?? '';
+	const fase = fases_embudo_ventas[event?.fase].actual;
 
 	// Estados editables
 	let isExpanded = $state(false);
-	let historia = $state(op?.historia || 'Sin historial registrado');
-	let cotizaciones = $state(op?.cotizaciones || 'No hay cotizaciones');
-	let documentos = $state(op?.documentos || 'Sin documentos');
+	let historia = $state(event?.historia || 'Sin historial registrado');
+	let cotizaciones = $state(event?.cotizaciones || 'No hay cotizaciones');
+	let documentos = $state(event?.documentos || 'Sin documentos');
 
 	let style;
-	switch (op?.fase) {
+	switch (event?.fase) {
 		case '0':
 			style = 'background-color: var(--color-perdida);';
 			break;
@@ -38,7 +41,7 @@
 			break;
 		default:
 			style = 'background-color: var(--color-prospecto);';
-			console.log(op);
+			console.log(event);
 			break;
 	}
 
@@ -61,11 +64,11 @@
 	</div>
 
 	<div class="card-brief">
-		<p>{inicio}, {razon}</p>
+		<p>{inicio}, {razon_social}</p>
 	</div>
 
 	<div class="card-meta">
-		<p>{nombreAgente}, {fase?.actual}</p>
+		<p>{agente}, {fase}</p>
 	</div>
 
 	{#if isExpanded}
@@ -76,7 +79,7 @@
 				bind:value={historia}
 				type="textarea"
 				rows={3}
-				id={op?.id_oportunidad || ''}
+				id={event?.id_oportunidad || ''}
 			/>
 
 			<EditableField
@@ -85,7 +88,7 @@
 				bind:value={cotizaciones}
 				type="textarea"
 				rows={3}
-				id={op?.id_oportunidad || ''}
+				id={event?.id_oportunidad || ''}
 			/>
 
 			<EditableField
@@ -94,13 +97,13 @@
 				bind:value={documentos}
 				type="textarea"
 				rows={3}
-				id={op?.id_oportunidad || ''}
+				id={event?.id_oportunidad || ''}
 				hint="OC, pedido del cliente, guía de paquetería, acuse, fichas técnicas…"
 			/>
 			<div class="card-actions">
 				<h2>Siguiente fase:</h2>
 				<button class="butter">{fase.accion}</button>
-				{#if op?.fase == 3}
+				{#if event?.fase == 3}
 				<button class="butter">Perdida</button>
 				{/if}
 			</div>
