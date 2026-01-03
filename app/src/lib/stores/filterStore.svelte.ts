@@ -13,16 +13,18 @@ function setCookie(name: string, value: string) {
 
 export const filterStore = $state({
 	keyword: getCookie('keyword') || '',
-	atributo: getCookie('atributo') || ''
+	atributo: getCookie('atributo') || '',
+	weekOffset: Number(getCookie('weekOffset') || 0)
 });
 
 $effect.root(() => {
 	$effect(() => {
 		if (filterStore.keyword !== undefined)
 			setCookie('keyword', filterStore.keyword);
-
 		if (filterStore.atributo !== undefined)
 			setCookie('atributo', filterStore.atributo);
+		if (filterStore.weekOffset !== undefined)
+			setCookie('weekOffset', String(filterStore.weekOffset));
 	});
 });
 

@@ -4,6 +4,9 @@
 	import { filtrarConsecutivo } from '$lib/utils/util';
 	import { filterStore } from '$lib/stores/filterStore.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
+	const {
+		googleEvents
+	} = $props();
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
 	const hoursRangePerDay = { start: 8, end: 18 };
@@ -23,10 +26,7 @@
 		)
 	);
 
-	const {
-		googleEvents,
-		weekOffset // 0 = semana actual, 1 = siguiente, -1 = anterior
-	} = $props();
+
 
 	const [headers, ...rows] = googleEvents;
 	// Datos originales sin filtrar
@@ -53,7 +53,7 @@
 			: eventListOriginal
 	);
 
-	const weekDates = $derived(getWeekDates(weekOffset));
+	const weekDates = $derived(getWeekDates(filterStore.weekOffset));
 
 	// Obtener el año de la semana actual
 	const currentYear = $derived(weekDates[0].getFullYear());
