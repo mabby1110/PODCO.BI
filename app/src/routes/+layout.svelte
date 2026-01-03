@@ -1,5 +1,6 @@
 <script lang="ts">
 	import bms from '$lib/assets/bms-logo.svg';
+	import FormModal from '$lib/components/FormModal.svelte';
 	import NavButton from '$lib/components/NavButton.svelte';
 	import '$lib/global.css';
 
@@ -17,6 +18,8 @@
 <div class="page-container">
 	{@render children()}
 </div>
+
+<FormModal />
 
 <style>
 	.nav-container {

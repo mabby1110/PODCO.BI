@@ -1,30 +1,33 @@
 <script lang="ts">
-	let { selectedEvent } = $props();
+	import { page } from "$app/state";
+	import { selectedEvent } from "$lib/stores/selectedEvent";
+	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
+	const razon_social = clientes[$selectedEvent?.id_cliente]?.razon_social ?? '';
+	const agente = agentes.find((e) => e.id_agente == $selectedEvent?.id_agente).nombre ?? '';
+	const fase = fases_embudo_ventas[$selectedEvent?.fase].actual;
 </script>
 
 <button class="card-d" onclick={()=>$selectedEvent=null}>
 	<header>
-		<span class="fase">{selectedEvent.fase || 'Sin fase'}</span>
-		<span class="duracion">{selectedEvent.duracion}</span>
+		<h2>{$selectedEvent?.motivo}</h2>
+		<h3>{agente} {fase}</h3>
 	</header>
-
+	
 	<section class="grid">
-		<div><strong>ID:</strong> {selectedEvent.id}</div>
-		<div><strong>Cliente:</strong> {selectedEvent.id_cliente}</div>
-		<div><strong>Agente:</strong> {selectedEvent.id_agente}</div>
-		<div><strong>Inicio:</strong> {selectedEvent.inicio}</div>
-		<div><strong>Fin:</strong> {selectedEvent.fin}</div>
+		<h3>{razon_social}</h3>
+		<div><strong>Inicio:</strong> {$selectedEvent?.inicio}</div>
+		<div><strong>Fin:</strong> {$selectedEvent?.fin}</div>
 	</section>
 
-	{#if selectedEvent.motivo}
-		<p class="motivo">{selectedEvent.motivo}</p>
+	{#if $selectedEvent?.motivo}
+		<p class="motivo">{$selectedEvent?.motivo}</p>
 	{/if}
 
 	<footer>
-		{#if selectedEvent.cotizaciones}
+		{#if $selectedEvent?.cotizaciones}
 			<span>Cotizaciones</span>
 		{/if}
-		{#if selectedEvent.documentos}
+		{#if $selectedEvent?.documentos}
 			<span>Documentos</span>
 		{/if}
 	</footer>
@@ -49,12 +52,14 @@
 	}
 
 	.grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 6px 12px;
-		font-size: 0.9rem;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--a);
 	}
-
+	.grid h3 {
+		text-align: left;
+	}
 	.motivo {
 		font-size: 0.85rem;
 		opacity: 0.85;

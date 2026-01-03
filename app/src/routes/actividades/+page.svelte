@@ -4,6 +4,7 @@
 	import { appState } from '$lib/stores/appState.svelte';
 	import { selectedEvent } from '$lib/stores/selectedEvent.js';
 	import CalendarList from '$lib/components/CalendarList.svelte';
+	import ControlsPanel from '$lib/components/ControlsPanel.svelte';
 
 	let { data } = $props();
 </script>
@@ -12,9 +13,10 @@
 	<div class="title">
 		<h1>Actividades</h1>
 	</div>
+	<ControlsPanel/>
 	<div class="details">
 		{#if $selectedEvent}
-			<CardD selectedEvent={$selectedEvent} />
+			<CardD />
 		{/if}
 	</div>
 	{#if $appState.calendarView}

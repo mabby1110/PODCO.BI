@@ -1,28 +1,26 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	
-	let showModal = $state(false);
+	import { appState } from '$lib/stores/appState.svelte';
 </script>
 
-<button onclick={() => showModal = true} class="butter">Agregar Evento</button>
-
-{#if showModal}
+{#if $appState.addModal}
 	<div 
 		class="overlay" 
-		onclick={() => showModal = false}
+		onclick={() => appState.toggleAddModal()}
 		role="button"
 		tabindex="0"
-		onkeydown={(e) => e.key === 'Escape' && (showModal = false)}
+		onkeydown={(e) => e.key === 'Escape' && (appState.toggleAddModal())}
 	>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div 
 			class="modal" 
 			onclick={(e) => e.stopPropagation()}
 			role="dialog"
 			tabindex="-1"
 		>
-			<div class="modal-header">
+		<div class="modal-header">
 				<h2>Nuevo Evento</h2>
-				<button class="close" onclick={() => showModal = false}>✕</button>
+				<button class="close" onclick={() => appState.toggleAddModal()}>✕</button>
 			</div>
 			
 			<form method="POST" action="?/addEvent" use:enhance>
@@ -97,7 +95,7 @@
 				</label>
 				
 				<div class="actions">
-					<button type="button" onclick={() => showModal = false}>Cancelar</button>
+					<button type="button" onclick={() => appState.toggleAddModal()}>Cancelar</button>
 					<button type="submit">Guardar</button>
 				</div>
 			</form>

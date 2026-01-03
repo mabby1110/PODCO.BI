@@ -6,10 +6,10 @@
 	--color-contrast: rgba(0, 0, 105, 0.8);
 	--color-title: #000000;
 	--color-text: #000000;
-	--color-muted: #272727;
 	--color-error: #ff0000bb;
 	--color-success: #05a941bb;
 	--color-muted: #babababb;
+	--y2k: rgba(0, 0, 105, 0.1);
 
 	/* Paleta ajustada para contraste con TEXTO NEGRO */
 	--color-prospecto: var(--color-secondary);
@@ -71,7 +71,7 @@ body {
 	border-radius: var(--a);
 	padding: var(--a);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
-	background-color: var(--color-primary);
+	background-color: var(--color-background);
 	backdrop-filter: blur(16px);
 }
 .max {

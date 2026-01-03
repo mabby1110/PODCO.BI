@@ -8,6 +8,7 @@ interface AppState {
     panelMinimized: boolean;
     calendarCards: boolean;
     calendarView: boolean;
+    addModal: boolean;
 }
 
 const COOKIE_NAME = 'appState';
@@ -30,7 +31,7 @@ function setCookie(name: string, value: string, maxAge: number) {
 
 function getInitialState(): AppState {
     if (!browser) {
-        return { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false };
+        return { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false, addModal: false };
     }
     
     const cookie = getCookie(COOKIE_NAME);
@@ -42,7 +43,7 @@ function getInitialState(): AppState {
         }
     }
     
-    return { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false };
+    return { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false, addModal: false };
 }
 
 function createAppState() {
@@ -101,9 +102,14 @@ function createAppState() {
             saveToCookie(newState);
             return newState;
         }),
+        toggleAddModal: () => update(state => {
+            const newState = { ...state, addModal: !state.addModal };
+            saveToCookie(newState);
+            return newState;
+        }),
         
         reset: () => {
-            const newState = { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false };
+            const newState = { dnd: false, calendarActions: false, panelPosition: { x: 0, y: 0 }, panelMinimized: false, calendarCards: false, calendarView: false, addModal: false };
             saveToCookie(newState);
             set(newState);
         }
