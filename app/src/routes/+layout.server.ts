@@ -4,7 +4,7 @@ import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ depends, url }) => {
-	depends('clientes');
+	depends('app:data');
 
 	console.log('\nlayout data loaded\n');
 

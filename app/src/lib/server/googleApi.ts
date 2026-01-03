@@ -25,6 +25,47 @@ export async function getRange(range: string = 'historial_actividades!A:C') {
 
 	return response.data.values || [];
 }
+export async function deleteRowById(id: string, range: string = 'historial_actividades!A:C') {
+	const values = await getRange(range);
+
+	const rowIndex = values.findIndex((row) => row[0] === id);
+	if (rowIndex === -1) {
+		throw new Error(`No se encontró registro con ID: ${id}`);
+	}
+
+	const sheetName = range.split('!')[0];
+
+	// obtener sheetId
+	const meta = await sheets.spreadsheets.get({
+		spreadsheetId: GOOGLE_SHEET_ID
+	});
+
+	const sheet = meta.data.sheets?.find((s) => s.properties?.title === sheetName);
+
+	if (!sheet?.properties?.sheetId) {
+		throw new Error(`No se encontró la hoja ${sheetName}`);
+	}
+
+	await sheets.spreadsheets.batchUpdate({
+		spreadsheetId: GOOGLE_SHEET_ID,
+		requestBody: {
+			requests: [
+				{
+					deleteDimension: {
+						range: {
+							sheetId: sheet.properties.sheetId,
+							dimension: 'ROWS',
+							startIndex: rowIndex, // 0-based
+							endIndex: rowIndex + 1
+						}
+					}
+				}
+			]
+		}
+	});
+
+	return { deletedRow: rowIndex + 1 };
+}
 
 export async function updateRowById(
 	id: string,

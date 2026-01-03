@@ -4,9 +4,7 @@
 	import { filtrarConsecutivo } from '$lib/utils/util';
 	import { filterStore } from '$lib/stores/filterStore.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
-	const {
-		googleEvents
-	} = $props();
+	const { googleEvents } = $props();
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
 	const hoursRangePerDay = { start: 8, end: 18 };
@@ -26,27 +24,26 @@
 		)
 	);
 
-
-
 	const [headers, ...rows] = googleEvents;
-	// Datos originales sin filtrar
-	const eventListOriginal = $state(
-		rows.map((row) => ({
+
+	const eventListOriginal = $derived.by(() => {
+		const [, ...rows] = googleEvents;
+
+		return rows.map((row) => ({
 			id: row[0],
 			id_cliente: row[1],
 			id_agente: row[2],
-			duracion: row[3], // Formato: "00:30:00" o "01:00:00"
-			inicio: row[4], // Formato: "30/12/2025 12:00:00"
-			fin: row[5], // Formato: "31/12/2025 12:00:00"
+			duracion: row[3],
+			inicio: row[4],
+			fin: row[5],
 			motivo: row[6],
 			historia: row[7],
 			cotizaciones: row[8],
 			documentos: row[9],
 			fase: row[10]
-		}))
-	);
+		}));
+	});
 
-	// Lista filtrada derivada reactivamente
 	const eventList = $derived(
 		filterStore.atributo !== ''
 			? filtrarConsecutivo(filterStore.atributo, 'id_agente', eventListOriginal)
