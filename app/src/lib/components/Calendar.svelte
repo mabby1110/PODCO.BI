@@ -4,6 +4,7 @@
 	import { filtrarConsecutivo } from '$lib/utils/util';
 	import { filterStore } from '$lib/stores/filterStore.svelte';
 	import { appState } from '$lib/stores/appState.svelte';
+	import { invalidate } from '$app/navigation';
 	const { googleEvents } = $props();
 
 	const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
@@ -141,6 +142,8 @@
 			body: JSON.stringify({ id: eventId, inicio, fin })
 		});
 
+		await invalidate('app:data');
+		
 		// estado local
 		eventList[i] = {
 			...eventList[i],
