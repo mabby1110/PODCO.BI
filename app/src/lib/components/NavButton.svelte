@@ -151,16 +151,10 @@
 	</button>
 
 	{#if expanded}
-		<button
-			in:slide={{ delay: 200 }}
-			onclick={() => {
-				appState.togglePageActions()
-				expanded = !expanded;
-				}}
-			class="butter reset-button"
-		>
-			{$appState.calendarView ? 'mostrar acciones' : 'ocultar acciones'}
+		<button onclick={() => appState.toggleCalendarView()} class="butter primary">
+			{$appState.calendarView ? '📋 Lista' : '📅 Calendario'}
 		</button>
+		<button onclick={() => appState.toggleAddModal()} class="butter">Agregar Evento</button>
 		<button
 			in:slide={{ delay: 200 }}
 			class="butter actions-button"
@@ -168,18 +162,28 @@
 		>
 			Resetear posición</button
 		>
+		<button
+			in:slide={{ delay: 200 }}
+			onclick={() => {
+				appState.togglePageActions();
+				expanded = !expanded;
+			}}
+			class="butter reset-button"
+		>
+			{$appState.calendarView ? 'mostrar acciones' : 'ocultar acciones'}
+		</button>
 	{/if}
 </div>
 
 <style>
 	.nav-container {
 		position: fixed;
-		top: var(--b);
-		right: var(--b);
+		top: var(--a);
+		right: var(--a);
 		z-index: 1000;
 		display: flex;
 		flex-direction: column;
-		gap: var(--b);
+		gap: var(--a);
 		max-width: 96vw;
 	}
 

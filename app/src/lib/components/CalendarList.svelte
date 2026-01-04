@@ -50,6 +50,7 @@
 		flex-direction: column;
 		overflow: auto;
 		gap: var(--b);
+		width: 100%;
 	}
 
 	.op-list {

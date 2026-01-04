@@ -10,28 +10,29 @@
 </script>
 
 <div class="page-content">
-	<div class="title">
+	<section class="title">
 		<h1>Actividades</h1>
-	</div>
+	</section>
 
-	<div class="controls-panel">
+	<section class="controls-panel">
 		{#if $appState.pageActions}
 			<ControlsPanel />
 		{/if}
-	</div>
+	</section>
 
-	<div class="details">
+	<section class="details">
 		{#if $selectedEvent}
 			<CardD />
 		{/if}
-	</div>
-	{#if $appState.calendarView}
-		<div class="calendar">
+	</section>
+
+	<section class="calendar">
+		{#if $appState.calendarView}
 			<Calendar googleEvents={data.actividades} />
-		</div>
-	{:else}
-		<CalendarList {data} />
-	{/if}
+		{:else}
+			<CalendarList {data} />
+		{/if}
+	</section>
 </div>
 
 <style>

@@ -21,35 +21,25 @@
 </script>
 
 <div class="container" in:slide>
-	<!-- Controles principales -->
-	<div class="control-group main-controls">
-		<button onclick={() => appState.toggleCalendarView()} class="butter primary">
-			{$appState.calendarView ? '📋 Lista' : '📅 Calendario'}
-		</button>
-		<button onclick={() => appState.toggleAddModal()} class="butter">Agregar Evento</button>
-		<Filter />
-	</div>
+	<Filter />
 	<!-- Controles específicos del calendario -->
 	{#if $appState.calendarView}
-		<div class="control-group page-controls">
-			<div class="calendar-navigation">
-				<button onclick={previousWeek} class="butter nav-btn" title="Semana anterior"> ← </button>
-				<button onclick={goToCurrentWeek} class="butter current-week"> Semana Actual </button>
-				<button onclick={nextWeek} class="butter nav-btn" title="Semana siguiente"> → </button>
-			</div>
-
-			<div class="calendar-options">
-				<button
-					onclick={() => appState.toggleDnd()}
-					class="butter toggle"
-					class:active={$appState.dnd}
-				>
-					✏️ {$appState.dnd ? 'Edición Activada' : 'Activar Edición'}
-				</button>
-				<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter toggle">
-					{$appState.calendarCards ? '📏 Minimizar' : '📐 Expandir'}
-				</button>
-			</div>
+		<div class="calendar-options">
+			<button
+				onclick={() => appState.toggleDnd()}
+				class="butter toggle"
+				class:active={$appState.dnd}
+			>
+				✏️ {$appState.dnd ? 'Edición Activada' : 'Activar Edición'}
+			</button>
+			<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter toggle">
+				{$appState.calendarCards ? '📏 Minimizar' : '📐 Expandir'}
+			</button>
+		</div>
+		<div class="calendar-navigation">
+			<button onclick={previousWeek} class="butter nav-btn" title="Semana anterior"> ← </button>
+			<button onclick={goToCurrentWeek} class="butter current-week"> Semana Actual </button>
+			<button onclick={nextWeek} class="butter nav-btn" title="Semana siguiente"> → </button>
 		</div>
 	{/if}
 </div>
@@ -64,21 +54,9 @@
 		padding: var(--b);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 		gap: var(--b);
 		min-width: 300px;
-	}
-
-	.control-group {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--a);
-	}
-
-	.main-controls {
-		display: flex;
-		flex-direction: row;
-		gap: var(--a);
 	}
 
 	.butter {
@@ -86,15 +64,6 @@
 		font-weight: 500;
 		white-space: nowrap;
 	}
-
-	/* Navegación del calendario */
-	.page-controls {
-		border-top: 1px solid var(--color-muted);
-		padding-top: var(--b);
-		display: flex;
-		flex-direction: row;
-	}
-
 	.nav-btn {
 		min-width: 50px;
 	}
@@ -109,8 +78,8 @@
 		color: white;
 	}
 	.calendar-navigation {
-		flex: 1;
 		display: flex;
 		gap: var(--a);
+		flex-grow: 1;
 	}
 </style>

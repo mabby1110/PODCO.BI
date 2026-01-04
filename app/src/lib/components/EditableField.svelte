@@ -105,6 +105,9 @@
 </form>
 
 <style>
+	form {
+		width: 100%;
+	}
 	.detail-block {
 		display: flex;
 		flex-direction: column;

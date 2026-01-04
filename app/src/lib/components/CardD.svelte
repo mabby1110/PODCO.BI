@@ -1,30 +1,84 @@
 <script lang="ts">
-	import { page } from "$app/state";
-	import { selectedEvent } from "$lib/stores/selectedEvent";
-	import { slide } from "svelte/transition";
-	import DelAction from "./DelAction.svelte";
+	import { page } from '$app/state';
+	import { selectedEvent } from '$lib/stores/selectedEvent';
+	import { slide } from 'svelte/transition';
+	import DelAction from './DelAction.svelte';
+	import EditableField from './EditableField.svelte';
+
 	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
 	const razon_social = clientes[$selectedEvent?.id_cliente]?.razon_social ?? '';
 	const agente = agentes.find((e) => e.id_agente == $selectedEvent?.id_agente).nombre ?? '';
 	const fase = fases_embudo_ventas[$selectedEvent?.fase].actual;
+	let historia = $state($selectedEvent?.historia || 'Sin historial registrado');
+	let cotizaciones = $state($selectedEvent?.cotizaciones || 'No hay cotizaciones');
+	let documentos = $state($selectedEvent?.documentos || 'Sin documentos');
+	let style = $derived.by(() => {
+		const colorMap = {
+			'0': 'background-color: var(--color-perdida);',
+			'2': 'background-color: var(--color-analizar);',
+			'3': 'background-color: var(--color-cotizar);',
+			'4': 'background-color: var(--color-ganada);',
+			'5': 'background-color: var(--color-enviar);',
+			'6': 'background-color: var(--color-finalizar); color: white;'
+		};
+		return colorMap[$selectedEvent?.fase] || 'background-color: var(--color-prospecto);';
+	});
+	function closeCard(e: MouseEvent) {
+		e.stopPropagation();
+		$selectedEvent = null;
+	}
 </script>
 
-<button class="card-d" onclick={()=>$selectedEvent=null}  in:slide>
+<div class="card-d" transition:slide {style}>
 	<header>
-		<h2>{$selectedEvent?.motivo} {$selectedEvent?.id}</h2>
-		<h3>{agente} {fase}</h3>
+		<h2>{$selectedEvent?.motivo} {$selectedEvent?.id} {$selectedEvent?.fase}</h2>
+		<button class="close-btn" onclick={closeCard} aria-label="Cerrar">✕</button>
 	</header>
-	
+	<div class="info-line">
+		<h3>{agente} {fase}</h3>
+	</div>
 	<section class="grid">
 		<h3>{razon_social}</h3>
 		<div><strong>Inicio:</strong> {$selectedEvent?.inicio}</div>
 		<div><strong>Fin:</strong> {$selectedEvent?.fin}</div>
-	</section>
+		<EditableField
+			label="Historia"
+			name="historia"
+			bind:value={historia}
+			type="textarea"
+			rows={3}
+			id={$selectedEvent?.historia || ''}
+		/>
 
+		<EditableField
+			label="Cotizaciones"
+			name="cotizaciones"
+			bind:value={cotizaciones}
+			type="textarea"
+			rows={3}
+			id={$selectedEvent?.id_oportunidad || ''}
+		/>
+
+		<EditableField
+			label="Documentos"
+			name="documentos"
+			bind:value={documentos}
+			type="textarea"
+			rows={3}
+			id={$selectedEvent?.id_oportunidad || ''}
+			hint="OC, pedido del cliente, guía de paquetería, acuse, fichas técnicas…"
+		/>
+		<div class="card-actions">
+			<h2>Siguiente fase:</h2>
+			<button class="butter">{fase.accion}</button>
+			{#if $selectedEvent?.fase == 3}
+				<button class="butter">Perdida</button>
+			{/if}
+		</div>
+	</section>
 	{#if $selectedEvent?.motivo}
 		<p class="motivo">{$selectedEvent?.motivo}</p>
 	{/if}
-
 	<footer>
 		{#if $selectedEvent?.cotizaciones}
 			<span>Cotizaciones</span>
@@ -34,7 +88,7 @@
 		{/if}
 		<DelAction />
 	</footer>
-</button>
+</div>
 
 <style>
 	.card-d {
@@ -45,15 +99,33 @@
 		border-radius: 12px;
 		border: 1px solid var(--color-secondary);
 		width: 100%;
+		max-height: 40vh;
+		overflow: auto;
 	}
-
 	header {
 		display: flex;
 		justify-content: space-between;
+		align-items: flex-start;
+		gap: 10px;
+	}
+	.close-btn {
+		background: transparent;
+		border: none;
+		font-size: 1.5rem;
+		line-height: 1;
+		padding: 0;
+		cursor: pointer;
+		opacity: 0.6;
+		transition: opacity 0.2s;
+		flex-shrink: 0;
+	}
+	.close-btn:hover {
+		opacity: 1;
+	}
+	.info-line {
 		font-size: 0.85rem;
 		opacity: 0.85;
 	}
-
 	.grid {
 		display: flex;
 		flex-direction: column;
@@ -67,14 +139,12 @@
 		font-size: 0.85rem;
 		opacity: 0.85;
 	}
-
 	footer {
 		display: flex;
 		gap: 12px;
 		font-size: 0.75rem;
 		opacity: 0.6;
 	}
-
 	@media (max-width: 640px) {
 		.grid {
 			grid-template-columns: 1fr;
