@@ -13,7 +13,13 @@
 	<div class="title">
 		<h1>Actividades</h1>
 	</div>
-	<ControlsPanel/>
+
+	<div class="controls-panel">
+		{#if $appState.pageActions}
+			<ControlsPanel />
+		{/if}
+	</div>
+
 	<div class="details">
 		{#if $selectedEvent}
 			<CardD />

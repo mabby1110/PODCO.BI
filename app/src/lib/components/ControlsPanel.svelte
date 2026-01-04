@@ -6,7 +6,6 @@
 	import { slide } from 'svelte/transition';
 
 	let panelToolsElement: HTMLElement;
-
 	// Navegar semanas
 	function previousWeek() {
 		filterStore.weekOffset -= 1;
@@ -21,13 +20,13 @@
 	}
 </script>
 
-<div class="controls-panel" transition:slide bind:this={panelToolsElement}>
+<div class="container" in:slide>
 	<!-- Controles principales -->
 	<div class="control-group main-controls">
 		<button onclick={() => appState.toggleCalendarView()} class="butter primary">
-			{$appState.calendarView ? '📋 Vista Lista' : '📅 Vista Calendario'}
+			{$appState.calendarView ? '📋 Lista' : '📅 Calendario'}
 		</button>
-		<button onclick={() => (appState.toggleAddModal())} class="butter">Agregar Evento</button>
+		<button onclick={() => appState.toggleAddModal()} class="butter">Agregar Evento</button>
 		<Filter />
 	</div>
 	<!-- Controles específicos del calendario -->
@@ -57,7 +56,7 @@
 
 <style>
 	/* Panel de controles */
-	.controls-panel {
+	.container {
 		background: var(--y2k);
 		backdrop-filter: blur(4px);
 		border: 1px solid var(--color-muted);
@@ -72,7 +71,7 @@
 
 	.control-group {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 		gap: var(--a);
 	}
 

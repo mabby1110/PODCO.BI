@@ -67,7 +67,7 @@ body {
 	color: var(--color-text);
 	border: none;
 	height: var(--d);
-	min-width: var(--f);
+	min-width: fit-content;
 	border-radius: var(--a);
 	padding: var(--a);
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);

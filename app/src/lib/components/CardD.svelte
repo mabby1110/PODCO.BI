@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { selectedEvent } from "$lib/stores/selectedEvent";
+	import { slide } from "svelte/transition";
 	import DelAction from "./DelAction.svelte";
 	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
 	const razon_social = clientes[$selectedEvent?.id_cliente]?.razon_social ?? '';
@@ -8,7 +9,7 @@
 	const fase = fases_embudo_ventas[$selectedEvent?.fase].actual;
 </script>
 
-<button class="card-d" onclick={()=>$selectedEvent=null}>
+<button class="card-d" onclick={()=>$selectedEvent=null}  in:slide>
 	<header>
 		<h2>{$selectedEvent?.motivo} {$selectedEvent?.id}</h2>
 		<h3>{agente} {fase}</h3>

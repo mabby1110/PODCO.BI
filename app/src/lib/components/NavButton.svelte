@@ -151,9 +151,23 @@
 	</button>
 
 	{#if expanded}
-		<div class="controls-panel" in:slide={{ delay:200}} bind:this={panelToolsElement}>
-			<button class='reset-button' onclick={() => appState.resetPanelPosition()}>Resetear posición</button>
-		</div>
+		<button
+			in:slide={{ delay: 200 }}
+			onclick={() => {
+				appState.togglePageActions()
+				expanded = !expanded;
+				}}
+			class="butter reset-button"
+		>
+			{$appState.calendarView ? 'mostrar acciones' : 'ocultar acciones'}
+		</button>
+		<button
+			in:slide={{ delay: 200 }}
+			class="butter actions-button"
+			onclick={() => appState.resetPanelPosition()}
+		>
+			Resetear posición</button
+		>
 	{/if}
 </div>
 
@@ -227,22 +241,12 @@
 		margin: 0;
 		font-weight: 600;
 	}
-
-	/* Panel de controles */
-	.controls-panel {
-		background: var(--y2k);
-		backdrop-filter: blur(4px);
-		border: 1px solid var(--color-muted);
-		border-radius: var(--a);
-		padding: var(--b);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		display: flex;
-		flex-direction: column;
-		gap: var(--b);
-		width: 100%;
+	.reset-button {
+		color: var(--color-text);
+		background-color: var(--color-highlight);
 	}
-.reset-button {
-	color: var(--color-text);
-	background-color: var(--color-highlight);
-}
+	.actions-button {
+		color: white;
+		background-color: var(--color-contrast);
+	}
 </style>
