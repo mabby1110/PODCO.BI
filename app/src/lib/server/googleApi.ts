@@ -3,7 +3,12 @@ import { GOOGLE_APPLICATION_CREDENTIALS, GOOGLE_SHEET_ID } from '$env/static/pri
 import { readFileSync } from 'fs';
 import crypto from 'crypto';
 
-const credentials = JSON.parse(readFileSync(GOOGLE_APPLICATION_CREDENTIALS, 'utf-8'));
+function generateId(prefix = 'BMS') {
+	const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+	const hash = crypto.randomBytes(4).toString('hex');
+	return `${prefix}-${date}-${hash}`;
+}
+const credentials = JSON.parse(GOOGLE_APPLICATION_CREDENTIALS, 'utf-8');
 
 const auth = new google.auth.GoogleAuth({
 	credentials,
@@ -11,12 +16,6 @@ const auth = new google.auth.GoogleAuth({
 });
 
 const sheets = google.sheets({ version: 'v4', auth });
-
-function generateId(prefix = 'BMS') {
-	const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-	const hash = crypto.randomBytes(4).toString('hex');
-	return `${prefix}-${date}-${hash}`;
-}
 
 export async function getRange(range: string = 'historial_actividades!A:C') {
 	const response = await sheets.spreadsheets.values.get({
