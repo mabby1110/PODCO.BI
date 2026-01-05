@@ -127,6 +127,10 @@
 		offsetY = y;
 		appState.setPanelPosition(x, y);
 	}
+	function handleView() {
+		appState.toggleCalendarView();
+		expanded = false;
+	}
 </script>
 
 <div class="nav-container" style="transform: translate({offsetX}px, {offsetY}px);">
@@ -151,10 +155,9 @@
 	</button>
 
 	{#if expanded}
-		<button onclick={() => appState.toggleCalendarView()} class="butter primary">
+		<button onclick={handleView} class="butter primary">
 			{$appState.calendarView ? '📋 Lista' : '📅 Calendario'}
 		</button>
-		<button onclick={() => appState.toggleAddModal()} class="butter">Agregar Evento</button>
 		<button
 			in:slide={{ delay: 200 }}
 			class="butter actions-button"

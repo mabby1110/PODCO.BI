@@ -142,6 +142,12 @@ function createAppState() {
 				saveToCookie(newState);
 				return newState;
 			}),
+		setPageActions: (value: boolean) =>
+			update((state) => {
+				const newState = { ...state, pageActions: value };
+				saveToCookie(newState);
+				return newState;
+			}),
 
 		reset: () => {
 			const newState = {

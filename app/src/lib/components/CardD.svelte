@@ -4,6 +4,7 @@
 	import { slide } from 'svelte/transition';
 	import DelAction from './DelAction.svelte';
 	import EditableField from './EditableField.svelte';
+	import { appState } from '$lib/stores/appState.svelte';
 
 	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
 	const razon_social = clientes[$selectedEvent?.id_cliente]?.razon_social ?? '';
@@ -26,6 +27,7 @@
 	function closeCard(e: MouseEvent) {
 		e.stopPropagation();
 		$selectedEvent = null;
+		appState.setPageActions(true);
 	}
 </script>
 
@@ -111,7 +113,6 @@
 	.close-btn {
 		background: transparent;
 		border: none;
-		font-size: 1.5rem;
 		line-height: 1;
 		padding: 0;
 		cursor: pointer;
@@ -123,7 +124,6 @@
 		opacity: 1;
 	}
 	.info-line {
-		font-size: 0.85rem;
 		opacity: 0.85;
 	}
 	.grid {
@@ -136,13 +136,11 @@
 		text-align: left;
 	}
 	.motivo {
-		font-size: 0.85rem;
 		opacity: 0.85;
 	}
 	footer {
 		display: flex;
 		gap: 12px;
-		font-size: 0.75rem;
 		opacity: 0.6;
 	}
 	@media (max-width: 640px) {

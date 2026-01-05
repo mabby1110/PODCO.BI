@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { appState } from '$lib/stores/appState.svelte';
 	import { filterStore } from '$lib/stores/filterStore.svelte.js';
-	import FormModal from '$lib/components/FormModal.svelte';
 	import Filter from '$lib/components/Filter.svelte';
 	import { slide } from 'svelte/transition';
 
@@ -22,20 +21,15 @@
 
 <div class="container" in:slide>
 	<Filter />
+	<button onclick={() => appState.toggleAddModal()} class="butter">Agregar Evento</button>
 	<!-- Controles específicos del calendario -->
 	{#if $appState.calendarView}
-		<div class="calendar-options">
-			<button
-				onclick={() => appState.toggleDnd()}
-				class="butter toggle"
-				class:active={$appState.dnd}
-			>
-				✏️ {$appState.dnd ? 'Edición Activada' : 'Activar Edición'}
-			</button>
-			<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter toggle">
-				{$appState.calendarCards ? '📏 Minimizar' : '📐 Expandir'}
-			</button>
-		</div>
+		<button onclick={() => appState.toggleDnd()} class="butter toggle" class:active={$appState.dnd}>
+			✏️ {$appState.dnd ? 'Edición Activada' : 'Activar Edición'}
+		</button>
+		<button onclick={() => appState.toggleMinimizedCalendarCards()} class="butter toggle">
+			{$appState.calendarCards ? '📏 Minimizar' : '📐 Expandir'}
+		</button>
 		<div class="calendar-navigation">
 			<button onclick={previousWeek} class="butter nav-btn" title="Semana anterior"> ← </button>
 			<button onclick={goToCurrentWeek} class="butter current-week"> Semana Actual </button>
@@ -51,11 +45,11 @@
 		backdrop-filter: blur(4px);
 		border: 1px solid var(--color-muted);
 		border-radius: var(--a);
-		padding: var(--b);
+		padding: var(--a);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--b);
+		gap: var(--a);
 		min-width: 300px;
 	}
 

@@ -36,6 +36,7 @@
 	}
 	function select() {
 		selectedEvent.set(event);
+		appState.setPageActions(false);
 	}
 </script>
 
