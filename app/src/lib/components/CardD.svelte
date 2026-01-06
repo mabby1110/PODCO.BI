@@ -9,7 +9,7 @@
 	const { clientes, agentes, fases_embudo_ventas } = $derived(page.data);
 	const razon_social = clientes[$selectedEvent?.id_cliente]?.razon_social ?? '';
 	const agente = agentes.find((e) => e.id_agente == $selectedEvent?.id_agente).nombre ?? '';
-	const fase = fases_embudo_ventas[$selectedEvent?.fase].actual;
+	const fase = fases_embudo_ventas[$selectedEvent?.fase - 1];
 	let historia = $state($selectedEvent?.historia || 'Sin historial registrado');
 	let cotizaciones = $state($selectedEvent?.cotizaciones || 'No hay cotizaciones');
 	let documentos = $state($selectedEvent?.documentos || 'Sin documentos');
@@ -24,6 +24,8 @@
 		};
 		return colorMap[$selectedEvent?.fase] || 'background-color: var(--color-prospecto);';
 	});
+	console.log('selectedEvent', $selectedEvent, fase.actual, fase.accion);
+
 	function closeCard(e: MouseEvent) {
 		e.stopPropagation();
 		$selectedEvent = null;
@@ -33,16 +35,20 @@
 
 <div class="card-d" transition:slide>
 	<header>
-		<h2>{$selectedEvent?.motivo}</h2>
+		<h1>{$selectedEvent?.motivo}</h1>
 		<button class="close-btn" onclick={closeCard} aria-label="Cerrar">✕</button>
 	</header>
-	<div class="info-line">
-		<h3>{agente} {fase}</h3>
-	</div>
-	<section class="grid">
+	<section class="meta">
 		<h3>{razon_social}</h3>
+	</section>
+	<section class="agent">
+		<p>{agente} - {fase.actual}</p>
+	</section>
+	<section class= "date">
 		<div><strong>Inicio:</strong> {$selectedEvent?.inicio}</div>
-		<div><strong>Fin:</strong> {$selectedEvent?.fin}</div>
+		<div><strong>Fin:</strong> {$selectedEvent?.fin}</div>	
+	</section>
+	<section class="grid">
 		<EditableField
 			label="Historia"
 			name="historia"
@@ -71,7 +77,7 @@
 			hint="OC, pedido del cliente, guía de paquetería, acuse, fichas técnicas…"
 		/>
 		<div class="card-actions">
-			<h2>Siguiente fase:</h2>
+			<h3>Siguiente fase:</h3>
 			<button class="butter">{fase.accion}</button>
 			{#if $selectedEvent?.fase == 3}
 				<button class="butter">Perdida</button>
@@ -96,12 +102,12 @@
 	.card-d {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
-		padding: 14px;
+		gap: var(--a);
+		padding: var(--b);
 		border-radius: 12px;
 		border: 1px solid var(--color-secondary);
 		width: 100%;
-		max-height: 40vh;
+		max-height: 60vh;
 		overflow: auto;
 	}
 	header {
@@ -119,11 +125,9 @@
 		transition: opacity 0.2s;
 		flex-shrink: 0;
 	}
-	.close-btn:hover {
-		opacity: 1;
-	}
-	.info-line {
-		opacity: 0.85;
+	.date {
+		border-top: 1px solid var(--color-primary);
+		padding-top: var(--a);
 	}
 	.grid {
 		display: flex;
@@ -131,20 +135,7 @@
 		align-items: flex-start;
 		gap: var(--a);
 	}
-	.grid h3 {
-		text-align: left;
-	}
-	.motivo {
-		opacity: 0.85;
-	}
-	footer {
-		display: flex;
-		gap: 12px;
-		opacity: 0.6;
-	}
-	@media (max-width: 640px) {
-		.grid {
-			grid-template-columns: 1fr;
-		}
+	.card-actions {
+		margin-top: var(--d);
 	}
 </style>

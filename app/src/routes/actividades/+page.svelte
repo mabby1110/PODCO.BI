@@ -11,7 +11,7 @@
 
 <div class="page-content">
 	<section class="title">
-		<h1>Actividades</h1>
+		<h1>{$appState.calendarView ? '📅 Calendario' : '📋 Lista'}</h1>
 	</section>
 
 	<section class="controls-panel">
