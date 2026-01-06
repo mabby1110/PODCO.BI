@@ -232,6 +232,7 @@ export function dropzone(node: HTMLElement, options: DropzoneOptions = {}) {
 			e.dataTransfer.dropEffect = state.dropEffect!;
 		}
 	}
+	
 	// ===== TOUCH (Mobile/Tablet) =====
 	function handle_touchdrop(e: CustomEvent) {
 		const isDndEnabled = get(appState).dnd;

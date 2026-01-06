@@ -3,6 +3,7 @@
 	import { slide } from 'svelte/transition';
 	import EditableField from './EditableField.svelte';
 	import { selectedEvent } from '$lib/stores/selectedEvent';
+	import { appState } from '$lib/stores/appState.svelte';
 
 	let { event } = $props();
 
@@ -13,7 +14,7 @@
 	const razon_social = clientes[event.id_cliente]?.razon_social ?? '';
 	const agente = agentes.find((e) => e.id_agente == event.id_agente).nombre ?? '';
 	const fase = fases_embudo_ventas[event?.fase].actual;
-
+	let selected = $derived($selectedEvent?.id == event.id);
 	let style;
 	switch (event?.fase) {
 		case '0':
@@ -42,10 +43,12 @@
 
 	function select() {
 		selectedEvent.set(event);
+		appState.setPageActions(false);
+		selected = true;
 	}
 </script>
 
-<button class="card" {style} onclick={select}>
+<button class="card {selected ? 'selected' : ''}" {style} onclick={select}>
 	<div class="card-title">
 		<h2>{motivo}</h2>
 	</div>
@@ -70,6 +73,7 @@
 		flex-direction: column;
 		align-items: flex-start;
 		border-style: none;
+		border-width: 0;
 		border-radius: var(--a);
 		padding: var(--b);
 		box-shadow: 0 8px 6px rgba(0, 0, 0, 0.2);
@@ -95,5 +99,8 @@
 		right: var(--a);
 		bottom: var(--a);
 		opacity: 0.8;
+	}
+	.selected {
+		border: 4px solid var(--color-highlight);
 	}
 </style>

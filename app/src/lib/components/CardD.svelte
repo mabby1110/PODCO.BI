@@ -31,9 +31,9 @@
 	}
 </script>
 
-<div class="card-d" transition:slide {style}>
+<div class="card-d" transition:slide>
 	<header>
-		<h2>{$selectedEvent?.motivo} {$selectedEvent?.id} {$selectedEvent?.fase}</h2>
+		<h2>{$selectedEvent?.motivo}</h2>
 		<button class="close-btn" onclick={closeCard} aria-label="Cerrar">✕</button>
 	</header>
 	<div class="info-line">
@@ -108,7 +108,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-		gap: 10px;
 	}
 	.close-btn {
 		background: transparent;

@@ -54,8 +54,6 @@
 		gap: var(--a);
 	}
 	.calendar {
-		border: 1px solid var(--color-muted);
-		border-radius: var(--a);
 		flex-grow: 1;
 		overflow: auto;
 		display: flex;
